@@ -1,0 +1,25 @@
+<resources>
+    <string name="tile_label">かこって検索</string>
+    <string name="xposed_description">どんな Android 9–15 デバイスでもかこって検索を起動</string>
+    <string name="title_activity_settings">設定</string>
+
+    <string name="trigger_failed">起動に失敗しました！</string>
+    <string name="app_settings">アプリの設定</string>
+    <string name="default_trigger_delay">デフォルトの起動遅延時間</string>
+    <string name="tile_trigger_delay">タイルの起動遅延時間</string>
+    <string name="vibrate">バイブレーション</string>
+    <string name="module_settings">モジュールの設定</string>
+    <string name="access_xposed_service_failed">Xposed サービスへのアクセスに失敗しました</string>
+    <string name="system_trigger_service">システム起動サービス</string>
+    <string name="trigger_by_long_press_home_button">ホームボタンの長押しで起動</string>
+    <string name="trigger_by_long_press_gesture_handle">ナビゲーションバーの長押しで起動</string>
+    <string name="device_spoof_for_google">Google デバイス偽装</string>
+    <string name="manufacturer">メーカー</string>
+    <string name="brand">ブランド</string>
+    <string name="model">モデル</string>
+    <string name="device">デバイス</string>
+
+    <string name="about">アプリについて</string>
+    <string name="language">言語</string>
+    <string name="follow_system">システムに従う</string>
+</resources>
