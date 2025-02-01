@@ -7,6 +7,7 @@ enum class Language(val id: Int, val toLocale: () -> Locale) {
     English(R.string.english, { Locale.ENGLISH }),
     SimplifiedChinese(R.string.simplified_chinese, { Locale.SIMPLIFIED_CHINESE }),
     TraditionalChinese(R.string.traditional_chinese, { Locale.TRADITIONAL_CHINESE })
+    Japanese(R.string.japanese, { Locale.JAPANESE })
 }
 
 object AppConfig {
