@@ -9,6 +9,8 @@ on:
       - '*.md'
       - '.github/**'
       - '!.github/workflows/**'
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
