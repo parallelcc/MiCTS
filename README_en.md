@@ -24,6 +24,8 @@ Trigger Circle to Search on any Android 9–15 device
    - Launching MiCTS will trigger, so you can use other apps like Quick Ball, Xposed Edge, ShortX, etc., set launching MiCTS as the action to customize the trigger method
    - MiCTS provides a trigger tile, so you can add it to the Quick Settings panel and trigger by clicking it
    - For Xiaomi devices, MiCTS has built-in support for `Trigger by long press gesture handle` and `Trigger by long press home button`, which can be enabled in the MiCTS settings (need to activate the module and restart the phone after installing MiCTS)
+   - For Samsung devices, download [Routines+](https://galaxystore.samsung.com/detail/com.samung.android.app.routineplus) from the Galaxy Store and in the Modes and Routines app, replace the long press power button from Bixby to launch MiCTS
+   
 
 ## Settings
 
