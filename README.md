@@ -24,7 +24,7 @@
     - 打开MiCTS即可触发，因此可以利用其他软件，比如悬浮球、Xposed Edge、ShortX等，将动作设置为打开MiCTS，实现自定义触发方式
     - MiCTS提供了一个触发磁贴，可将其添加到快速设置面板里，通过点击磁贴触发
     - 对于小米设备，MiCTS内置了长按小白条触发和长按Home键触发的功能，可以在MiCTS设置里开启（安装MiCTS后需要激活模块并重启手机才能使用）
-    - 对于三星设备，请从 Galaxy Store 下载 [Routines+](https://galaxystore.samsung.com/detail/com.samung.android.app.routineplus)。然后在“Modes and Routines”应用程序中，设置用 Bixby 替换长按电源按钮的功能来启动 MiCTS。
+    - 对于Android版本>=13的三星设备，可以从[三星应用商店](https://galaxystore.samsung.com/detail/com.samung.android.app.routineplus)或[Good Lock](https://galaxystore.samsung.com/detail/com.samsung.android.goodlock)里下载安装“日常程序+”，然后在“设置-模式和日常程序”里，创建日常程序通过按钮操作实现长按电源按钮等方式来启动MiCTS
 
 ## 设置
 
