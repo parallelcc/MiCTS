@@ -44,8 +44,8 @@ object XposedConfig {
         KEY_DEVICE_SPOOF to true,
         KEY_SPOOF_MANUFACTURER to "Google",
         KEY_SPOOF_BRAND to "google",
-        KEY_SPOOF_MODEL to "Pixel 8 Pro",
-        KEY_SPOOF_DEVICE to "husky",
+        KEY_SPOOF_MODEL to "Pixel 9 Pro",
+        KEY_SPOOF_DEVICE to "caiman",
         KEY_VIBRATE to false,
     )
 }
