@@ -65,7 +65,7 @@
 
 - На странице Модули в LSPosed выберите MiCTS, затем нажмите на значок настроек
 
-- Зажатие кнопки в шторке
+- Зажмите кнопку в шторке
 
 
 
@@ -77,17 +77,17 @@
 
 
 
-### Module Settings
+### Настройки Модуля
 
-Need to activate the module in LSPosed
+Необходимо активировать модуль в LSPosed
 
-- System trigger service: The system service used by triggering. Only the services supported will be shown. Need to add System Framework to the scope in LSPosed
+- Сервис системных триггеров: Системная служба, используемая при срабатывании триггера. Будут показаны только поддерживаемые службы. Необходимо добавить Системный Framework в область действия в LSPosed
 
-   - VIS: Supports on Android 9-15. Need to set Google as the default assistant app and the screen edge will flash when triggering for some devices. If the module is not activated, only this service will be used
+   - VIS: Поддерживается на Android 9-15. Необходимо установить Google как ассистент по умолчанию. Если модуль не активирован, будет использоваться только этот сервис
 
-   - CSHelper: Supports on Android 14 QPR3 and above. Don’t need to set Google as the default assistant app and the screen edge will not flash when triggering
+   - CSHelper: Поддерживает Android 14 QPR3 и выше. Не нужно устанавливать Google как ассистент по умолчанию
 
-   - CSService: Supports on Android 15 and above. A dedicated service for Circle to Search, same effect as CSHelper
+   - CSService: Поддерживает Android 15 и выше. Специальный сервис для Circle To Search, действие которого аналогично CSHelper
 
 
 
