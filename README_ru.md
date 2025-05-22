@@ -10,7 +10,7 @@
 
 
 
-Trigger Circle to Search on any Android 9–15 device
+Триггер для Circle to Search на любом устройстве Android 9–15
 
 
 
@@ -18,21 +18,20 @@ Trigger Circle to Search on any Android 9–15 device
 
 
 
-## How to Use
+## Как использовать
 
 
 
-1. Install the latest version of [Google](https://play.google.com/store/apps/details?id=com.google.android.googlequicksearchbox), enable auto-start, disable background restrictions, and set Google as the default assistant app
+1. Установите последнюю версию [Google](https://play.google.com/store/apps/details?id=com.google.android.googlequicksearchbox), включите автозапуск, выключите ограничения на работу в фоновом режиме, и установите Google ассистентом по умолчанию
 
 
 
 
+2. Установите и запустите MiCTS
 
-2. Install and launch MiCTS
+   - Если вам повезет, то Circle to Search будет запускаться без root при запуске MiCTS
 
-   - If you're lucky, Circle to Search will be triggered directly without root when launching MiCTS
-
-   - If nothing happened, most likely it's because Google disabled Circle to Search for your device (you can confirm by checking the message `Omni invocation failed: not enabled` in Logcat). Try the following **with root**:
+   - Если ничего не произошло, скорее всего, Google отключил функцию Circle to Search для вашего устройства (вы можете убедиться в этом, проверив сообщение `Omni invocation failed: not enabled` в Logcat). Попробуйте выполнить следующие действия **с root**:
 
      - Activate the module in LSPosed, enable `Device spoof for Google` in the [MiCTS settings](#how-to-enter-settings), and force restart Google
 
