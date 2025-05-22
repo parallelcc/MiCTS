@@ -33,7 +33,7 @@
 
    - Если ничего не произошло, скорее всего, Google отключил функцию Circle to Search для вашего устройства (вы можете убедиться в этом, проверив сообщение `Omni invocation failed: not enabled` в Logcat). Попробуйте выполнить следующие действия **с root**:
 
-     - Активируйте модуль в LSPosed, включите `Подмену устройства для Google` в [настройках MiCTS] (#how-to-enter-settings) и принудительно перезапустите Google
+     - Активируйте модуль в LSPosed, включите `Подмену устройства для Google` в [настройках MiCTS](#как-открыть-настройки) и принудительно перезапустите Google
 
      - Если он все еще не работает, измените `com.google.android.apps.search.omnient.device` флаг `45631784` на true, используя [GMS-Flags](https://github.com/polodarb/GMS-Flags).
 
@@ -41,39 +41,39 @@
 
 
 
-3. Set up the trigger method
+3. Настройка метода триггера
 
-   - Launching MiCTS will trigger, so you can use other apps like Quick Ball, Xposed Edge, ShortX, etc., set launching MiCTS as the action to customize the trigger method
+   - Триггер срабатывает при запуске MiCTS, поэтому вы можете использовать другие приложения, такие как Quick Ball, Xposed Edge, ShortX и т. д., установите запуск MiCTS в качестве действия, чтобы настроить метод срабатывания
 
-   - MiCTS provides a trigger tile, so you can add it to the Quick Settings panel and trigger by clicking it
+   - MiCTS предоставляет кнопку в шторке в качестве триггера, поэтому вы можете добавить ее в шторку и запускать триггеры, нажимая на неё
 
-   - For Xiaomi devices, MiCTS has built-in support for `Trigger by long press gesture handle` and `Trigger by long press home button`, which can be enabled in the MiCTS settings (need to activate the module and restart the phone after installing MiCTS)
+   - Для устройств Xiaomi в MiCTS встроена поддержка `Триггера по долгому жесту` и `Триггера по долгому нажатию кнопки домой`, которые можно включить в настройках MiCTS (необходимо активировать модуль и перезагрузить телефон после установки MiCTS)
 
-   - For Samsung devices running Android 13 and above, you can download and install "Routines+" from the [Galaxy Store](https://galaxystore.samsung.com/detail/com.samung.android.app.routineplus) or [Good Lock](https://galaxystore.samsung.com/detail/com.samsung.android.goodlock). Then, go to Settings > Modes and Routines to create routines that launch MiCTS by Button action such as long-pressing the power button.
+   - Для устройств Samsung под управлением Android 13 и выше можно загрузить и установить "Routines+" из [Galaxy Store](https://galaxystore.samsung.com/detail/com.samung.android.app.routineplus) или [Good Lock](https://galaxystore.samsung.com/detail/com.samsung.android.goodlock). Затем перейдите в раздел "Настройки" > "Режимы и рутина", чтобы создать конфигурации, запускающие MiCTS по действию, например долгому нажати кнопки питания
 
    
 
 
 
-## Settings
+## Настройки
 
 
 
-### How to enter Settings
+### Как открыть Настройки
 
-- Long press the MiCTS app icon to show the Settings option, then click to enter
+- Зажмите значок приложения MiCTS, отобразится опция "Настройки"
 
-- From the Modules page in LSPosed, click MiCTS, then click the settings icon to enter
+- На странице Модули в LSPosed выберите MiCTS, затем нажмите на значок настроек
 
-- Long press the Quick Settings panel tile to enter
+- Зажатие кнопки в шторке
 
 
 
-### App Settings
+### Настройки Приложения
 
-- Default trigger delay: The delay when triggering by launching MiCTS
+- Задержка обычного триггера: Задержка при срабатывании при запуске MiCTS
 
-- Tile trigger delay: The delay when triggering by the Quick Settings panel tile
+- Задержка триггера кнопки в шторке: Задержка триггера при нажатии кнопки в шторке
 
 
 
