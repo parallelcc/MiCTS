@@ -117,23 +117,22 @@ Need to activate the module in LSPosed
 
 
 
-## FAQ
+## Частозадаваемые вопросы
 
 
 
-### Prompt "Trigger failed!"
+### Пишет "Триггер не сработал!"
 
 
 
-Most likely because Google is not set as the default assistant, check it
+Скорее всего, Google не установлен как ассистент по умолчанию
+
+
+### Вместо Circle to Search открывается Google ассистент
 
 
 
-### Google assistant appears instead of Circle to Search
-
-
-
-Ensure that Google is the latest version
+Убедитесь что Google обновлён до последней версии
 
 
 
@@ -149,7 +148,7 @@ This issue should not occur when the `System trigger service` is set to `CSHelpe
 
 
 
-## Star History
+## История звёзд
 
 
 
