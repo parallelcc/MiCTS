@@ -33,9 +33,9 @@
 
    - Если ничего не произошло, скорее всего, Google отключил функцию Circle to Search для вашего устройства (вы можете убедиться в этом, проверив сообщение `Omni invocation failed: not enabled` в Logcat). Попробуйте выполнить следующие действия **с root**:
 
-     - Activate the module in LSPosed, enable `Device spoof for Google` in the [MiCTS settings](#how-to-enter-settings), and force restart Google
+     - Активируйте модуль в LSPosed, включите `Подмену устройства для Google` в [настройках MiCTS] (#how-to-enter-settings) и принудительно перезапустите Google
 
-     - If it still doesn't work, then change `com.google.android.apps.search.omnient.device` flag `45631784` to true using [GMS-Flags](https://github.com/polodarb/GMS-Flags)
+     - Если он все еще не работает, измените `com.google.android.apps.search.omnient.device` флаг `45631784` на true, используя [GMS-Flags](https://github.com/polodarb/GMS-Flags).
 
 
 
@@ -136,15 +136,15 @@ Need to activate the module in LSPosed
 
 
 
-### Sometimes it doesn't trigger successfully, and the interface appears only after opening Google
+### Иногда триггер не срабатывает успешно, и интерфейс появляется только после открытия Google
 
 
 
-This is likely due to the tombstone mechanism. Check if your device has related settings and add Google to the whitelist, such as selecting "No restrictions" in battery saver
+Скорее всего, это связано с механизмом закрытия фоновых процессов. Проверьте, есть ли на вашем устройстве соответствующие настройки и добавьте Google в белый список, например, выберите "Без ограничений" в экономии заряда батареи.
 
 
 
-This issue should not occur when the `System trigger service` is set to `CSHelper` in the Module Settings
+Эта проблема не должна возникать когда `Сервис системных триггеров` установлен в настройках модуля `CSHelper`
 
 
 
