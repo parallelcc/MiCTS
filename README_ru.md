@@ -14,7 +14,7 @@
 
 
 
-*This app only aims to trigger Circle to Search and cannot handle issues that may occur after triggering successfully*
+*Это приложение предназначено только для запуска Circle to Search и не может решать проблемы, которые могут возникнуть после успешного запуска*
 
 
 
