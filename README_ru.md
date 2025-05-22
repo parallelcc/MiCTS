@@ -47,9 +47,9 @@
 
    - MiCTS предоставляет кнопку в шторке в качестве триггера, поэтому вы можете добавить ее в шторку и запускать триггеры, нажимая на неё
 
-   - Для устройств Xiaomi в MiCTS встроена поддержка `Триггера по долгому жесту` и `Триггера по долгому нажатию кнопки домой`, которые можно включить в настройках MiCTS (необходимо активировать модуль и перезагрузить телефон после установки MiCTS)
+   - Для устройств Xiaomi в MiCTS встроена поддержка `Триггера по зажатию полосы управления с помощью жестов` и `Триггера по зажатию кнопки домой`, которые можно включить в настройках MiCTS (необходимо активировать модуль и перезагрузить телефон после установки MiCTS)
 
-   - Для устройств Samsung под управлением Android 13 и выше можно загрузить и установить "Routines+" из [Galaxy Store](https://galaxystore.samsung.com/detail/com.samung.android.app.routineplus) или [Good Lock](https://galaxystore.samsung.com/detail/com.samsung.android.goodlock). Затем перейдите в раздел "Настройки" > "Режимы и рутина", чтобы создать конфигурации, запускающие MiCTS по действию, например долгому нажати кнопки питания
+   - Для устройств Samsung с Android 13 и выше можно загрузить и установить "Routines+" из [Galaxy Store](https://galaxystore.samsung.com/detail/com.samung.android.app.routineplus) или [Good Lock](https://galaxystore.samsung.com/detail/com.samsung.android.goodlock). Затем перейдите в раздел "Настройки" > "Режимы и рутина", чтобы создать конфигурации, запускающие MiCTS по действию, например долгому нажати кнопки питания
 
    
 
@@ -93,27 +93,27 @@
 
 
 
-- Trigger by long press gesture handle: Only supports on Xiaomi devices. Need to add System Launcher/POCO Launcher to the scope in LSPosed
+- Триггер по зажатию полосы управления с помощью жестов: Поддерживается только на устройствах Xiaomi. Необходимо добавить Системный Launcher/POCO Launcher в область действия в LSPosed
 
 
 
 
 
-- Trigger by long press home button: Only supports on Xiaomi devices. Need to add System Framework to the scope in LSPosed
+- Триггер по зажатию кнопки домой: Поддерживается только на устройствах Xiaomi. Необходимо добавить Системный Framework в область видимости в LSPosed
 
 
 
 
 
-- Device spoof for Google: Need to add Google to the scope in LSPosed
+- Подмена устройства для Google: Необходимо добавить Google в область действия в LSPosed
 
-   - Manufacturer: Modify the `ro.product.manufacturer` value that Google reads
+   - Производитель: Модифицировать значение `ro.product.manufacturer` которое читает Google
 
-   - Brand: Modify the `ro.product.brand` value that Google reads
+   - Бренд: Модифицировать значение `ro.product.brand` которое читает Google
 
-   - Model: Modify the `ro.product.model` value that Google reads
-
-   - Device: Modify the `ro.product.device` value that Google reads
+   - Модель: Модифицировать значение `ro.product.model` которое читает Google
+     
+   - Устройство: Модифицировать значение `ro.product.device` которое читает Google
 
 
 
