@@ -11,8 +11,8 @@
     <string name="module_settings">Настройки Модуля</string>
     <string name="access_xposed_service_failed">Нет доступа к сервису xposed</string>
     <string name="system_trigger_service">Сервис системных триггеров</string>
-    <string name="trigger_by_long_press_home_button">Триггер по долгому нажатию кнопки домой</string>
-    <string name="trigger_by_long_press_gesture_handle">Триггер по долгому жесту</string>
+    <string name="trigger_by_long_press_home_button">Триггер по зажатию кнопки домой</string>
+    <string name="trigger_by_long_press_gesture_handle">Триггер по зажатию полосы управления с помощью жестов</string>
     <string name="device_spoof_for_google">Подмена устройства для Google</string>
     <string name="manufacturer">Производитель</string>
     <string name="brand">Бренд</string>
