@@ -1,0 +1,25 @@
+<resources>
+    <string name="tile_label">Circle to Search</string>
+    <string name="xposed_description">Триггер для Circle to Search на любом устройстве Android 9–15</string>
+    <string name="title_activity_settings">Настройки</string>
+
+    <string name="trigger_failed">Триггер не сработал!</string>
+    <string name="app_settings">Настройки приложения</string>
+    <string name="default_trigger_delay">Задержка основного триггера</string>
+    <string name="tile_trigger_delay">Задержка триггера кнопки в шторке</string>
+    <string name="vibrate">Вибрация</string>
+    <string name="module_settings">Настройки Модуля</string>
+    <string name="access_xposed_service_failed">Нет доступа к сервису xposed</string>
+    <string name="system_trigger_service">Сервис системных триггеров</string>
+    <string name="trigger_by_long_press_home_button">Триггер по долгому нажатию кнопки домой</string>
+    <string name="trigger_by_long_press_gesture_handle">Триггер по долгому жесту</string>
+    <string name="device_spoof_for_google">Подмена устройства для Google</string>
+    <string name="manufacturer">Производитель</string>
+    <string name="brand">Бренд</string>
+    <string name="model">Модель</string>
+    <string name="device">Устройство</string>
+
+    <string name="about">О приложении</string>
+    <string name="language">Язык</string>
+    <string name="follow_system">Как в системе</string>
+    </resources>
