@@ -49,7 +49,7 @@
 
    - Для устройств Xiaomi в MiCTS встроена поддержка `Триггера по зажатию полосы управления с помощью жестов` и `Триггера по зажатию кнопки домой`, которые можно включить в настройках MiCTS (необходимо активировать модуль и перезагрузить телефон после установки MiCTS)
 
-   - Для устройств Samsung с Android 13 и выше можно загрузить и установить "Routines+" из [Galaxy Store](https://galaxystore.samsung.com/detail/com.samung.android.app.routineplus) или [Good Lock](https://galaxystore.samsung.com/detail/com.samsung.android.goodlock). Затем перейдите в раздел "Настройки" > "Режимы и рутина", чтобы создать конфигурации, запускающие MiCTS по действию, например долгому нажати кнопки питания
+   - Для устройств Samsung с Android 13 и выше можно загрузить и установить "Routines+" из [Galaxy Store](https://galaxystore.samsung.com/detail/com.samsung.android.app.routineplus) или [Good Lock](https://galaxystore.samsung.com/detail/com.samsung.android.goodlock). Затем перейдите в раздел "Настройки" > "Режимы и рутина", чтобы создать конфигурации, запускающие MiCTS по действию, например долгому нажати кнопки питания
 
    
 

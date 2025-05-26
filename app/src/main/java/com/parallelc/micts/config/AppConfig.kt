@@ -6,11 +6,11 @@ enum class Language(val id: Int, val toLocale: () -> Locale) {
     FollowSystem(R.string.follow_system, { Locale.getDefault() }),
     English(R.string.english, { Locale.ENGLISH }),
     Greek(R.string.greek, { Locale("el") }),
+    Russian(R.string.russian, { Locale("ru") }),
     Japanese(R.string.japanese, { Locale.JAPANESE }),
     SimplifiedChinese(R.string.simplified_chinese, { Locale.SIMPLIFIED_CHINESE }),
     TraditionalChinese(R.string.traditional_chinese, { Locale.TRADITIONAL_CHINESE }),
-    Vietnamese(R.string.vietnamese, { Locale("vi") }),
-    Russian(R.string.russian, { Locale("ru") })
+    Vietnamese(R.string.vietnamese, { Locale("vi") })
 }
 
 object AppConfig {
