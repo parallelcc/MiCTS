@@ -23,34 +23,18 @@ class LongPressHomeHooker {
         @SuppressLint("PrivateApi")
         fun hook(param: SystemServerLoadedParam) {
             val miuiSingleKeyRule = param.classLoader.loadClass("com.android.server.policy.MiuiSingleKeyRule")
-            module!!.hook(
-                miuiSingleKeyRule.getDeclaredMethod("supportLongPress"),
-                SupportLongPressHooker::class.java
-            )
-            module!!.hook(
-                miuiSingleKeyRule.getDeclaredMethod("onLongPress", Long::class.java),
-                OnLongPressHooker::class.java
-            )
             mContext = miuiSingleKeyRule.getDeclaredField("mContext")
             mContext.isAccessible = true
             mKeyCode = miuiSingleKeyRule.getDeclaredField("mKeyCode")
             mKeyCode.isAccessible = true
-        }
-
-        @XposedHooker
-        class SupportLongPressHooker : Hooker {
-            companion object {
-                @JvmStatic
-                @BeforeInvocation
-                fun before(callback: BeforeHookCallback) {
-                    if (mKeyCode.getInt(callback.thisObject) == 3) {
-                        val prefs = module!!.getRemotePreferences(CONFIG_NAME)
-                        if (prefs.getBoolean(KEY_HOME_TRIGGER, DEFAULT_CONFIG[KEY_HOME_TRIGGER] as Boolean)) {
-                            callback.returnAndSkip(true)
-                        }
-                    }
-                }
-            }
+            module!!.hook(
+                miuiSingleKeyRule.getDeclaredMethod("onLongPress", Long::class.java),
+                OnLongPressHooker::class.java
+            )
+            module!!.hook(
+                miuiSingleKeyRule.getDeclaredMethod("supportLongPress"),
+                SupportLongPressHooker::class.java
+            )
         }
 
         @XposedHooker
@@ -70,6 +54,22 @@ class LongPressHomeHooker {
                             )
                             callback.returnAndSkip(null)
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    @XposedHooker
+    class SupportLongPressHooker : Hooker {
+        companion object {
+            @JvmStatic
+            @BeforeInvocation
+            fun before(callback: BeforeHookCallback) {
+                if (mKeyCode.getInt(callback.thisObject) == 3) {
+                    val prefs = module!!.getRemotePreferences(CONFIG_NAME)
+                    if (prefs.getBoolean(KEY_HOME_TRIGGER, DEFAULT_CONFIG[KEY_HOME_TRIGGER] as Boolean)) {
+                        callback.returnAndSkip(true)
                     }
                 }
             }
