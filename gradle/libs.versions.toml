@@ -3,6 +3,7 @@ accompanist-drawablepainter = "0.36.0"
 agp = "8.7.2"
 hiddenapibypass = "4.3"
 kotlin = "2.0.0"
+material = "1.12.0"
 xposed-api = "100"
 xposed-service = "100-1.0.0"
 lifecycle-runtime-ktx = "2.8.7"
@@ -18,6 +19,7 @@ libxposed-service = { group = "io.github.libxposed", name = "service", version.r
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 animation-core-android = { group = "androidx.compose.animation", name = "animation-core-android", version.ref = "animation-core-android" }
 animation-android = { group = "androidx.compose.animation", name = "animation-android", version.ref = "animation-android" }

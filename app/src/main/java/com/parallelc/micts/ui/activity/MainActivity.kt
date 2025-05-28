@@ -1,7 +1,6 @@
 package com.parallelc.micts.ui.activity
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.media.AudioAttributes
 import android.os.Build
@@ -12,6 +11,9 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
+import androidx.lifecycle.lifecycleScope
 import com.parallelc.micts.R
 import com.parallelc.micts.config.AppConfig.CONFIG_NAME
 import com.parallelc.micts.config.AppConfig.DEFAULT_CONFIG
@@ -19,6 +21,8 @@ import com.parallelc.micts.config.AppConfig.KEY_DEFAULT_DELAY
 import com.parallelc.micts.config.AppConfig.KEY_TILE_DELAY
 import com.parallelc.micts.config.AppConfig.KEY_VIBRATE
 import com.parallelc.micts.module
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 @SuppressLint("PrivateApi")
@@ -61,18 +65,24 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
     return result
 }
 
-class MainActivity : Activity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
         val prefs = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE)
         val key = if (intent.getBooleanExtra("from_tile", false)) KEY_TILE_DELAY else KEY_DEFAULT_DELAY
-        val delay = prefs.getLong(key, DEFAULT_CONFIG[key] as Long)
-        if (delay > 0) {
-            Thread.sleep(delay)
+        val delayMs = prefs.getLong(key, DEFAULT_CONFIG[key] as Long)
+        lifecycleScope.launch {
+            if (delayMs > 0) {
+                delay(delayMs)
+            }
+            if (!triggerCircleToSearch(1, this@MainActivity, prefs.getBoolean(KEY_VIBRATE, DEFAULT_CONFIG[KEY_VIBRATE] as Boolean))) {
+                Toast.makeText(this@MainActivity, getString(R.string.trigger_failed), Toast.LENGTH_SHORT).show()
+            }
+            finish()
         }
-        if (!triggerCircleToSearch(1, this, prefs.getBoolean(KEY_VIBRATE, DEFAULT_CONFIG[KEY_VIBRATE] as Boolean))) {
-            Toast.makeText(this, getString(R.string.trigger_failed), Toast.LENGTH_SHORT).show()
-        }
-        finish()
     }
 }
