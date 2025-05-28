@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
+    implementation(libs.material)
     implementation(libs.material3)
     implementation(libs.animation.core.android)
     implementation(libs.animation.android)

@@ -12,6 +12,7 @@ import android.os.Vibrator
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import com.parallelc.micts.R
 import com.parallelc.micts.config.AppConfig.CONFIG_NAME
@@ -67,6 +68,10 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
         val prefs = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE)
         val key = if (intent.getBooleanExtra("from_tile", false)) KEY_TILE_DELAY else KEY_DEFAULT_DELAY
         val delayMs = prefs.getLong(key, DEFAULT_CONFIG[key] as Long)
