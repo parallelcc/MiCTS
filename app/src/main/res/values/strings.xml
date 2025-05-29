@@ -9,6 +9,7 @@
     <string name="default_trigger_delay">Default trigger delay</string>
     <string name="tile_trigger_delay">Tile trigger delay</string>
     <string name="vibrate">Vibrate</string>
+    <string name="async_trigger">Async trigger</string>
     <string name="module_settings">Module Settings</string>
     <string name="access_xposed_service_failed">Access xposed service failed</string>
     <string name="system_trigger_service">System trigger service</string>

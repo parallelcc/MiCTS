@@ -17,12 +17,14 @@ import androidx.lifecycle.lifecycleScope
 import com.parallelc.micts.R
 import com.parallelc.micts.config.AppConfig.CONFIG_NAME
 import com.parallelc.micts.config.AppConfig.DEFAULT_CONFIG
+import com.parallelc.micts.config.AppConfig.KEY_ASYNC_TRIGGER
 import com.parallelc.micts.config.AppConfig.KEY_DEFAULT_DELAY
 import com.parallelc.micts.config.AppConfig.KEY_TILE_DELAY
 import com.parallelc.micts.config.AppConfig.KEY_VIBRATE
 import com.parallelc.micts.module
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 @SuppressLint("PrivateApi")
@@ -66,6 +68,16 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
 }
 
 class MainActivity : ComponentActivity() {
+    suspend fun delayAndTrigger(delayMs: Long, vibrate: Boolean) {
+        if (delayMs > 0) {
+            delay(delayMs)
+        }
+        if (!triggerCircleToSearch(1, this, vibrate)) {
+            Toast.makeText(this, getString(R.string.trigger_failed), Toast.LENGTH_SHORT).show()
+        }
+        finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -75,14 +87,16 @@ class MainActivity : ComponentActivity() {
         val prefs = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE)
         val key = if (intent.getBooleanExtra("from_tile", false)) KEY_TILE_DELAY else KEY_DEFAULT_DELAY
         val delayMs = prefs.getLong(key, DEFAULT_CONFIG[key] as Long)
-        lifecycleScope.launch {
-            if (delayMs > 0) {
-                delay(delayMs)
+        val vibrate = prefs.getBoolean(KEY_VIBRATE, DEFAULT_CONFIG[KEY_VIBRATE] as Boolean)
+
+        if (prefs.getBoolean(KEY_ASYNC_TRIGGER, DEFAULT_CONFIG[KEY_ASYNC_TRIGGER] as Boolean)) {
+            lifecycleScope.launch {
+                delayAndTrigger(delayMs, vibrate)
             }
-            if (!triggerCircleToSearch(1, this@MainActivity, prefs.getBoolean(KEY_VIBRATE, DEFAULT_CONFIG[KEY_VIBRATE] as Boolean))) {
-                Toast.makeText(this@MainActivity, getString(R.string.trigger_failed), Toast.LENGTH_SHORT).show()
+        } else {
+            runBlocking {
+                delayAndTrigger(delayMs, vibrate)
             }
-            finish()
         }
     }
 }

@@ -8,6 +8,7 @@
     <string name="default_trigger_delay">Độ trễ kích hoạt mặc định</string>
     <string name="tile_trigger_delay">Độ trễ kích hoạt của ô lối tắt</string>
     <string name="vibrate">Rung</string>
+    <string name="async_trigger">Kích hoạt không đồng bộ</string>
     <string name="module_settings">Cài đặt module</string>
     <string name="access_xposed_service_failed">Truy cập dịch vụ xposed thất bại</string>
     <string name="system_trigger_service">Dịch vụ kích hoạt hệ thống</string>

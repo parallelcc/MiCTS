@@ -251,6 +251,18 @@ fun SettingsPage(
         )
 
         ListItem(
+            headlineContent = { Text(stringResource(R.string.async_trigger)) },
+            trailingContent = {
+                Switch(
+                    checked = appConfig[AppConfig.KEY_ASYNC_TRIGGER] as Boolean,
+                    onCheckedChange = {
+                        viewModel.updateAppConfig(AppConfig.KEY_ASYNC_TRIGGER, it)
+                    }
+                )
+            }
+        )
+
+        ListItem(
             headlineContent = {
                 Text(
                     text = stringResource(R.string.module_settings),

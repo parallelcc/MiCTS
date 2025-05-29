@@ -8,6 +8,7 @@
     <string name="default_trigger_delay">默认触发延迟</string>
     <string name="tile_trigger_delay">磁贴触发延迟</string>
     <string name="vibrate">震动</string>
+    <string name="async_trigger">异步触发</string>
     <string name="module_settings">模块设置</string>
     <string name="access_xposed_service_failed">访问xposed服务失败</string>
     <string name="system_trigger_service">系统触发服务</string>

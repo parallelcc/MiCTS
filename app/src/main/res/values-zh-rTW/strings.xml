@@ -8,6 +8,7 @@
     <string name="default_trigger_delay">預設觸發延遲</string>
     <string name="tile_trigger_delay">快速設定方塊觸發延遲</string>
     <string name="vibrate">震動</string>
+    <string name="async_trigger">非同步觸發</string>
     <string name="module_settings">模組設定</string>
     <string name="access_xposed_service_failed">存取xposed服務失敗</string>
     <string name="system_trigger_service">系統觸發服務</string>
