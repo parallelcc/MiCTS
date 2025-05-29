@@ -8,6 +8,7 @@
     <string name="default_trigger_delay">Задержка основного триггера</string>
     <string name="tile_trigger_delay">Задержка триггера кнопки в шторке</string>
     <string name="vibrate">Вибрация</string>
+    <string name="async_trigger">Асинхронный триггер</string>
     <string name="module_settings">Настройки Модуля</string>
     <string name="access_xposed_service_failed">Нет доступа к сервису xposed</string>
     <string name="system_trigger_service">Сервис системных триггеров</string>

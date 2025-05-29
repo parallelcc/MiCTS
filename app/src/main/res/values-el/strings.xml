@@ -9,6 +9,7 @@
     <string name="default_trigger_delay">Καθυστέρηση προεπιλεγμένου εναύσματος</string>
     <string name="tile_trigger_delay">Καθυστέρηση εναύσματος πλακιδίου</string>
     <string name="vibrate">Δόνηση</string>
+    <string name="async_trigger">Ασύγχρονο έναυσμα</string>
     <string name="module_settings">Ρυθμίσεις Module</string>
     <string name="access_xposed_service_failed">Η πρόσβαση στην υπηρεσία xposed απέτυχε</string>
     <string name="system_trigger_service">Υπηρεσία εναύσματος συστήματος</string>

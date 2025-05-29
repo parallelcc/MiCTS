@@ -8,6 +8,7 @@
     <string name="default_trigger_delay">デフォルトのトリガーの遅延</string>
     <string name="tile_trigger_delay">タイルのトリガーの遅延</string>
     <string name="vibrate">振動</string>
+    <string name="async_trigger">非同期トリガー</string>
     <string name="module_settings">モジュールの設定</string>
     <string name="access_xposed_service_failed">Xposed サービスのアクセスに失敗しました</string>
     <string name="system_trigger_service">システムトリガーサービス</string>
