@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name" translatable="false">MiCTS</string>
+    <string name="tile_label">सर्कल टु सर्च</string>
+    <string name="xposed_description">Android 9–15 मा सर्कल टु सर्च ट्रिगर गर्नुहोस्</string>
+    <string name="title_activity_settings">सेटिङ</string>
+
+    <string name="trigger_failed">ट्रिगर असफल भयो!</string>
+    <string name="app_settings">एप सेटिङहरू</string>
+    <string name="default_trigger_delay">पूर्वनिर्धारित ट्रिगर ढिलाइ</string>
+    <string name="tile_trigger_delay">टाइल ट्रिगर ढिलाइ</string>
+    <string name="vibrate">कम्पन</string>
+    <string name="async_trigger">एसिन्क ट्रिगर</string>
+    <string name="module_settings">मोड्युल सेटिङहरू</string>
+    <string name="access_xposed_service_failed">Xposed सेवा पहुँच असफल</string>
+    <string name="system_trigger_service">सिस्टम ट्रिगर सेवा</string>
+    <string name="trigger_by_long_press_home_button">होम बटन लामो थिचेर ट्रिगर गर्नुहोस्</string>
+    <string name="trigger_by_long_press_gesture_handle">जेस्चर ह्यान्डल लामो थिचेर ट्रिगर गर्नुहोस्</string>
+    <string name="device_spoof_for_google">Google का लागि उपकरण स्पूफ</string>
+    <string name="manufacturer">निर्माता</string>
+    <string name="brand">ब्रान्ड</string>
+    <string name="model">मोडेल</string>
+    <string name="device">डिभाइस</string>
+
+    <string name="about">बारेमा</string>
+    <string name="language">भाषा</string>
+    <string name="follow_system">सिस्टमअनुसार</string>
+    <string name="english" translatable="false">English</string>
+    <string name="greek" translatable="false">Ελληνικά</string>
+    <string name="japanese" translatable="false">日本語</string>
+    <string name="russian" translatable="false">Русский</string>
+    <string name="simplified_chinese" translatable="false">简体中文</string>
+    <string name="traditional_chinese" translatable="false">繁體中文</string>
+    <string name="vietnamese" translatable="false">Việt Nam</string>
+    <string name="nepali" translatable="false">नेपाली</string>
+
+</resources>

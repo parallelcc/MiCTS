@@ -23,4 +23,6 @@
     <string name="about">Σχετικά</string>
     <string name="language">Γλώσσα</string>
     <string name="follow_system">Σύμφωνα με το σύστημα</string>
+    <string name="nepali" translatable="false">नेपाली</string>
+
 </resources>
