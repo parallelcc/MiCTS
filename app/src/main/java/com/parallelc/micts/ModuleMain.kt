@@ -13,6 +13,7 @@ import com.parallelc.micts.config.XposedConfig.KEY_SPOOF_MODEL
 import com.parallelc.micts.hooker.CSMSHooker
 import com.parallelc.micts.hooker.InvokeOmniHooker
 import com.parallelc.micts.hooker.LongPressHomeHooker
+import com.parallelc.micts.hooker.NavStubGestureEventManagerHooker
 import com.parallelc.micts.hooker.NavStubViewHooker
 import com.parallelc.micts.hooker.VIMSHooker
 import io.github.libxposed.api.XposedInterface
@@ -66,6 +67,10 @@ class ModuleMain(base: XposedInterface, param: ModuleLoadedParam) : XposedModule
         when (param.packageName) {
             "com.miui.home", "com.mi.android.globallauncher" -> {
                 val skipHookTouch = runCatching {
+                    NavStubGestureEventManagerHooker.hook(param)
+                }.onFailure { e ->
+                    log("hook NavStubGestureEventManager fail", e)
+                }.recoverCatching {
                     val circleToSearchHelper = param.classLoader.loadClass("com.miui.home.recents.cts.CircleToSearchHelper")
                     hook(circleToSearchHelper.getDeclaredMethod("invokeOmni", Context::class.java, Int::class.java, Int::class.java), InvokeOmniHooker::class.java)
                 }.onFailure { e ->
