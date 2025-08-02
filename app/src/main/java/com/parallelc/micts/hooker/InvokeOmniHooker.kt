@@ -23,7 +23,7 @@ class InvokeOmniHooker : Hooker {
                 callback.returnAndSkip(
                     triggerCircleToSearch(
                         callback.args[2] as Int,
-                        callback.args[0] as Context,
+                        callback.args[0] as Context?,
                         prefs.getBoolean(KEY_VIBRATE, DEFAULT_CONFIG[KEY_VIBRATE] as Boolean)
                     )
                 )
