@@ -68,7 +68,7 @@ class ModuleMain(base: XposedInterface, param: ModuleLoadedParam) : XposedModule
             "com.miui.home", "com.mi.android.globallauncher" -> {
                 val skipHookTouch = runCatching {
                     NavStubGestureEventManagerHooker.hook(param)
-                }.onFailure { e->
+                }.onFailure { e ->
                     log("hook NavStubGestureEventManager fail", e)
                 }.recoverCatching {
                     val circleToSearchHelper = param.classLoader.loadClass("com.miui.home.recents.cts.CircleToSearchHelper")

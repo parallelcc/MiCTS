@@ -35,7 +35,7 @@ class NavStubGestureEventManagerHooker {
                     if (prefs.getBoolean(KEY_GESTURE_TRIGGER, DEFAULT_CONFIG[KEY_GESTURE_TRIGGER] as Boolean)) {
                         triggerCircleToSearch(
                             1,
-                            getInstance?.invoke(null) as Context?,
+                            getInstance?.invoke(null) as? Context,
                             prefs.getBoolean(
                                 KEY_VIBRATE,
                                 DEFAULT_CONFIG[KEY_VIBRATE] as Boolean
