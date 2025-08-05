@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.BIND_VOICE_INTERACTION"
+        tools:ignore="ProtectedPermissions" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <application
@@ -30,8 +33,11 @@
             android:excludeFromRecents="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.ASSIST" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
@@ -49,5 +55,7 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+
+
     </application>
 </manifest>
