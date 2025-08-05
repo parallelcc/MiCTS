@@ -24,6 +24,5 @@
     <string name="language">Ngôn ngữ</string>
     <string name="follow_system">Theo hệ thống</string>
     <string name="vietnamese">Tiếng Việt</string>
-    <string name="nepali" translatable="false">नेपाली</string>
 
 </resources>
