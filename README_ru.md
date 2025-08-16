@@ -6,7 +6,7 @@
 
 
 
-[简体中文](/README.md)&nbsp;&nbsp;|&nbsp;&nbsp;[English](/README_en.md)&nbsp;&nbsp;|&nbsp;&nbsp;Русский
+[简体中文](/README.md)&nbsp;&nbsp;|&nbsp;&nbsp;[English](/README_en.md)&nbsp;&nbsp;|&nbsp;&nbsp;Русский&nbsp;&nbsp;|&nbsp;&nbsp;[Türkçe](/README_tr.md)
 
 
 
