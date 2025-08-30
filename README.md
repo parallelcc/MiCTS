@@ -72,6 +72,12 @@ Google不是最新版，更新一下
 
 原因应该是墓碑机制导致的，看看手机有没有相关的设置可以把Google加到白名单里，比如电池优化选择无限制等，在模块设置里`系统触发服务`使用`CSHelper`应该没有这个问题
 
+## 贡献翻译
+
+你可以通过[Crowdin](https://crowdin.com/project/micts)贡献翻译
+
+如果你需要贡献一个新的语言，请先提交一个issue
+
 ## Star History
 
 <a href="https://star-history.com/#parallelcc/micts&Date">

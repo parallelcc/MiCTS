@@ -74,6 +74,12 @@ This is likely due to the tombstone mechanism. Check if your device has related 
 
 This issue should not occur when the `System trigger service` is set to `CSHelper` in the Module Settings
 
+## Translation Contributing
+
+You can contribute translation through [Crowdin](https://crowdin.com/project/micts)
+
+If you need to contribute a new language, please submit an issue first
+
 ## Star History
 
 <a href="https://star-history.com/#parallelcc/micts&Date">
