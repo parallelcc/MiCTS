@@ -1,8 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">畫圈搜尋</string>
     <string name="xposed_description">在任何Android 9–15裝置上觸發畫圈搜尋功能</string>
     <string name="title_activity_settings">設定</string>
-
     <string name="trigger_failed">觸發失敗！</string>
     <string name="app_settings">應用程式設定</string>
     <string name="default_trigger_delay">預設觸發延遲</string>
@@ -19,7 +19,6 @@
     <string name="brand">品牌</string>
     <string name="model">型號</string>
     <string name="device">裝置</string>
-
     <string name="about">關於</string>
     <string name="language">語言</string>
     <string name="follow_system">系統預設</string>
