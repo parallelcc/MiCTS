@@ -1,0 +1,5 @@
+pull_request_title: '[translation] Update translation from Crowdin'
+commit_message: '[ci skip]'
+files:
+  - source: /app/src/main/res/values/strings.xml
+    translation: /app/src/main/res/values-%two_letters_code%/%original_file_name%

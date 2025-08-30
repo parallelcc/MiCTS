@@ -9,6 +9,7 @@ on:
       - '*.md'
       - '.github/**'
       - '!.github/workflows/**'
+      - 'crowdin.yml'
   pull_request:
     types: [opened, synchronize, reopened]
 
