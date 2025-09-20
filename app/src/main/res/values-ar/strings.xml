@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tile_label">دائرة للبحث</string>
+    <string name="xposed_description">تفعيل دائرة البحث على أي جهاز يعمل بنظام أندرويد 9 إلى 15</string>
+    <string name="title_activity_settings">إعدادات</string>
+    <string name="trigger_failed">فشل التفعيل</string>
+    <string name="app_settings">إعدادات التطبيق</string>
+    <string name="default_trigger_delay">تأخير المشغِّل الافتراضي</string>
+    <string name="tile_trigger_delay">تأخير مشغل المربع</string>
+    <string name="vibrate">اهتزاز</string>
+    <string name="async_trigger">مشغل غير متزامن</string>
+    <string name="module_settings">إعدادات الوحدة</string>
+    <string name="access_xposed_service_failed">فشل الوصول إلى خدمة xposed</string>
+    <string name="system_trigger_service">خدمة تشغيل النظام</string>
+    <string name="trigger_by_long_press_home_button">يفعل بالضغط المطول على زر الصفحة الرئيسية</string>
+    <string name="trigger_by_long_press_gesture_handle">يُفعَّل بالضغط المطوَّل على مقبض الإيماءة</string>
+    <string name="device_spoof_for_google">انتحال الجهاز قوقل</string>
+    <string name="manufacturer">الشركة المصنعة</string>
+    <string name="brand">العلامة التجارية</string>
+    <string name="model">نموذج</string>
+    <string name="device">معلومات الجهاز</string>
+    <string name="about">حول</string>
+    <string name="language">اللغة</string>
+    <string name="follow_system">اتبع النظام</string>
+</resources>
