@@ -1,8 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">圈定即搜</string>
     <string name="xposed_description">在任意Android 9–15设备上触发圈定即搜（Circle to Search）功能</string>
     <string name="title_activity_settings">设置</string>
-
     <string name="trigger_failed">触发失败！</string>
     <string name="app_settings">应用设置</string>
     <string name="default_trigger_delay">默认触发延迟</string>
@@ -19,7 +19,6 @@
     <string name="brand">品牌</string>
     <string name="model">型号</string>
     <string name="device">设备</string>
-
     <string name="about">关于</string>
     <string name="language">语言</string>
     <string name="follow_system">跟随系统</string>
