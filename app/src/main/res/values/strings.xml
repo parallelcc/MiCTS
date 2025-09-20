@@ -24,13 +24,14 @@
     <string name="about">About</string>
     <string name="language">Language</string>
     <string name="follow_system">Follow system</string>
+    <string name="arabic" translatable="false">العربية</string>
     <string name="english" translatable="false">English</string>
     <string name="greek" translatable="false">Ελληνικά</string>
     <string name="japanese" translatable="false">日本語</string>
     <string name="russian" translatable="false">Русский</string>
     <string name="simplified_chinese" translatable="false">简体中文</string>
     <string name="traditional_chinese" translatable="false">繁體中文</string>
-    <string name="vietnamese" translatable="false">Việt Nam</string>
     <string name="turkish" translatable="false">Türkçe</string>
+    <string name="vietnamese" translatable="false">Việt Nam</string>
   
 </resources>
