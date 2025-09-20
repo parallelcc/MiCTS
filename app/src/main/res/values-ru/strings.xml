@@ -1,8 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">Circle to Search</string>
     <string name="xposed_description">Триггер для Circle to Search на любом устройстве Android 9–15</string>
     <string name="title_activity_settings">Настройки</string>
-
     <string name="trigger_failed">Триггер не сработал!</string>
     <string name="app_settings">Настройки приложения</string>
     <string name="default_trigger_delay">Задержка основного триггера</string>
@@ -19,7 +19,6 @@
     <string name="brand">Бренд</string>
     <string name="model">Модель</string>
     <string name="device">Устройство</string>
-
     <string name="about">О приложении</string>
     <string name="language">Язык</string>
     <string name="follow_system">Как в системе</string>

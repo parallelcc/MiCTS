@@ -1,9 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">MiCTS</string>
     <string name="tile_label">Circle to Search</string>
     <string name="xposed_description">Trigger Circle to Search on any Android 9–15 device</string>
     <string name="title_activity_settings">Settings</string>
-
     <string name="trigger_failed">Trigger failed!</string>
     <string name="app_settings">App Settings</string>
     <string name="default_trigger_delay">Default trigger delay</string>
@@ -20,18 +19,7 @@
     <string name="brand">Brand</string>
     <string name="model">Model</string>
     <string name="device">Device</string>
-
     <string name="about">About</string>
     <string name="language">Language</string>
     <string name="follow_system">Follow system</string>
-    <string name="arabic" translatable="false">العربية</string>
-    <string name="english" translatable="false">English</string>
-    <string name="greek" translatable="false">Ελληνικά</string>
-    <string name="japanese" translatable="false">日本語</string>
-    <string name="russian" translatable="false">Русский</string>
-    <string name="simplified_chinese" translatable="false">简体中文</string>
-    <string name="traditional_chinese" translatable="false">繁體中文</string>
-    <string name="turkish" translatable="false">Türkçe</string>
-    <string name="vietnamese" translatable="false">Việt Nam</string>
-  
 </resources>
