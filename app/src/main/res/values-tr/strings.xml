@@ -1,9 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">MiCTS</string>
     <string name="tile_label">Circle to Search</string>
     <string name="xposed_description">Circle to Search özelliğini herhangi bir Android 9-15 cihazda tetikleme</string>
     <string name="title_activity_settings">Ayarlar</string>
-
     <string name="trigger_failed">Tetikleme başarısız!</string>
     <string name="app_settings">Uygulama Ayarları</string>
     <string name="default_trigger_delay">Varsayılan tetikleme gecikmesi</string>
@@ -20,8 +19,7 @@
     <string name="brand">Marka</string>
     <string name="model">Model</string>
     <string name="device">Cihaz</string>
-
     <string name="about">Hakkında</string>
     <string name="language">Dil</string>
     <string name="follow_system">Sisteme uy</string>
-</resources>  
+</resources>
