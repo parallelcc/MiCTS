@@ -19,7 +19,7 @@ val latestTag = repo?.latestTag?.removePrefix("v") ?: "1.0"
 
 android {
     namespace = "com.parallelc.micts"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.parallelc.micts"
