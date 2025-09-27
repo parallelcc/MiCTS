@@ -8,7 +8,7 @@
         android:shortcutLongLabel="@string/title_activity_settings">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.parallelc.micts"
+            android:targetPackage="com.parallelc.vistrigger"
             android:targetClass="com.parallelc.micts.ui.activity.SettingsActivity" />
     </shortcut>
 </shortcuts>

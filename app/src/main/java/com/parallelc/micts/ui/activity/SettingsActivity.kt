@@ -103,7 +103,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             LargeTopAppBar(
                 title = {
                     Column {
-                        Text("MiCTS")
+                        Text(BuildConfig.APP_NAME)
                         Text(
                             text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                             style = MaterialTheme.typography.titleSmall,
@@ -176,7 +176,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                         modifier = Modifier.size(50.dp)
                     )
                     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                        Text("MiCTS")
+                        Text(BuildConfig.APP_NAME)
                         Text(
                             text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                             style = MaterialTheme.typography.titleSmall,
@@ -300,37 +300,39 @@ fun SettingsPage(
             return@Column
         }
 
-        ListItem(
-            headlineContent = { Text(stringResource(R.string.system_trigger_service)) },
-            trailingContent = {
-                Box {
-                    var triggerServiceExpanded by remember { viewModel.triggerServiceExpanded }
-                    val selectedOption = TriggerService.entries[xposedConfig[XposedConfig.KEY_TRIGGER_SERVICE] as Int].name
-                    val options = TriggerService.getSupportedServices()
+        if (BuildConfig.APP_NAME == "MiCTS") {
+            ListItem(
+                headlineContent = { Text(stringResource(R.string.system_trigger_service)) },
+                trailingContent = {
+                    Box {
+                        var triggerServiceExpanded by remember { viewModel.triggerServiceExpanded }
+                        val selectedOption = TriggerService.entries[xposedConfig[XposedConfig.KEY_TRIGGER_SERVICE] as Int].name
+                        val options = TriggerService.getSupportedServices()
 
-                    TextButton(onClick = { triggerServiceExpanded = true }) {
-                        Text(text = selectedOption)
-                    }
+                        TextButton(onClick = { triggerServiceExpanded = true }) {
+                            Text(text = selectedOption)
+                        }
 
-                    if (options.size <= 1) return@Box
+                        if (options.size <= 1) return@Box
 
-                    DropdownMenu(
-                        expanded = triggerServiceExpanded,
-                        onDismissRequest = { triggerServiceExpanded = false }
-                    ) {
-                        options.forEach { option ->
-                            DropdownMenuItem(
-                                text = { Text(option.name) },
-                                onClick = {
-                                    triggerServiceExpanded = false
-                                    viewModel.updateXposedConfig(XposedConfig.KEY_TRIGGER_SERVICE, option.ordinal)
-                                }
-                            )
+                        DropdownMenu(
+                            expanded = triggerServiceExpanded,
+                            onDismissRequest = { triggerServiceExpanded = false }
+                        ) {
+                            options.forEach { option ->
+                                DropdownMenuItem(
+                                    text = { Text(option.name) },
+                                    onClick = {
+                                        triggerServiceExpanded = false
+                                        viewModel.updateXposedConfig(XposedConfig.KEY_TRIGGER_SERVICE, option.ordinal)
+                                    }
+                                )
+                            }
                         }
                     }
                 }
-            }
-        )
+            )
+        }
 
         if (Build.MANUFACTURER == "Xiaomi") {
             ListItem(

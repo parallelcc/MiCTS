@@ -74,18 +74,32 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
-      - name: Build with Gradle
+      - name: Build MiCTS Release
         run: |
-          ./gradlew :app:assembleRelease
-          echo "RELEASE_APK_PATH=$(find app/build/outputs/apk/release -name '*.apk')" >> $GITHUB_ENV
+          ./gradlew :app:assembleMiCTSRelease
+          echo "MiCTS_APK_PATH=$(find app/build/outputs/apk/MiCTS/release -name '*.apk')" >> $GITHUB_ENV
+
+      - name: Build VISTrigger Release
+        run: |
+          ./gradlew :app:assembleVISTriggerRelease
+          echo "VISTrigger_APK_PATH=$(find app/build/outputs/apk/VISTrigger/release -name '*.apk')" >> $GITHUB_ENV
+
+      - name: Set NAME_SUFFIX
+        run: |
           if [ "${{ github.ref_type }}" == "tag" ]; then
             echo "NAME_SUFFIX=${{ github.ref_name }}" >> $GITHUB_ENV
           else
             echo "NAME_SUFFIX=${{ github.event.head_commit.id }}" >> $GITHUB_ENV
           fi
 
-      - name: Upload Artifacts
+      - name: Upload MiCTS Artifacts
         uses: actions/upload-artifact@v4
         with:
-          path: ${{ env.RELEASE_APK_PATH }}
+          path: ${{ env.MiCTS_APK_PATH }}
           name: MiCTS_${{ env.NAME_SUFFIX }}
+
+      - name: Upload VISTrigger Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: ${{ env.VISTrigger_APK_PATH }}
+          name: VISTrigger_${{ env.NAME_SUFFIX }}
