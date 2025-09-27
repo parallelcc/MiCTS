@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
+import com.parallelc.micts.BuildConfig
 import com.parallelc.micts.R
 import com.parallelc.micts.config.AppConfig.CONFIG_NAME
 import com.parallelc.micts.config.AppConfig.DEFAULT_CONFIG
@@ -27,13 +28,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 
+const val LOG_TAG = BuildConfig.APP_NAME
+
 @SuppressLint("PrivateApi")
 fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean): Boolean {
     val result =  runCatching {
         val bundle = Bundle()
-        bundle.putLong("invocation_time_ms", SystemClock.elapsedRealtime())
-        bundle.putInt("omni.entry_point", entryPoint)
-        bundle.putBoolean("micts_trigger", true)
+        if (BuildConfig.APP_NAME == "MiCTS") {
+            bundle.putLong("invocation_time_ms", SystemClock.elapsedRealtime())
+            bundle.putInt("omni.entry_point", entryPoint)
+            bundle.putBoolean("micts_trigger", true)
+        }
         val iVimsClass = Class.forName("com.android.internal.app.IVoiceInteractionManagerService")
         val vis = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java).invoke(null, "voiceinteraction")
         val vims = Class.forName("com.android.internal.app.IVoiceInteractionManagerService\$Stub").getMethod("asInterface", IBinder::class.java).invoke(null, vis)
@@ -44,7 +49,7 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
         }
     }.onFailure { e ->
         val errMsg = "triggerCircleToSearch invoke omni failed: " + e.stackTraceToString()
-        module?.log(errMsg) ?: Log.e("MiCTS", errMsg)
+        module?.log(errMsg) ?: Log.e(LOG_TAG, errMsg)
     }.getOrDefault(false)
     if (result && vibrate && context != null) {
         runCatching {
@@ -61,7 +66,7 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
             }
         }.onFailure { e ->
             val errMsg = "triggerCircleToSearch vibrate failed: " + e.stackTraceToString()
-            module?.log(errMsg) ?: Log.e("MiCTS", errMsg)
+            module?.log(errMsg) ?: Log.e(LOG_TAG, errMsg)
         }
     }
     return result

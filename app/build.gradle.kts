@@ -22,7 +22,6 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.parallelc.micts"
         minSdk = 28
         targetSdk = 35
         versionCode = commitCount
@@ -38,6 +37,25 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+
+    flavorDimensions += "app"
+
+    productFlavors {
+        create("MiCTS") {
+            dimension = "app"
+            applicationId = "com.parallelc.micts"
+            buildConfigField("String", "APP_NAME", "\"MiCTS\"")
+        }
+
+        create("VISTrigger") {
+            dimension = "app"
+            applicationId = "com.parallelc.vistrigger"
+            resValue("string", "app_name", "VISTrigger")
+            resValue("string", "tile_label", "VIS")
+            resValue("string", "xposed_description", "Trigger Voice Interaction Service on any Android 9–15 device")
+            buildConfigField("String", "APP_NAME", "\"VISTrigger\"")
         }
     }
 

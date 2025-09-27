@@ -33,19 +33,21 @@ class ModuleMain(base: XposedInterface, param: ModuleLoadedParam) : XposedModule
     override fun onSystemServerLoaded(param: SystemServerLoadedParam) {
         super.onSystemServerLoaded(param)
 
-        if (TriggerService.getSupportedServices().contains(TriggerService.CSHelper)) {
-            runCatching {
-                VIMSHooker.hook(param)
-            }.onFailure { e ->
-                log("hook VIMS fail", e)
+        if (BuildConfig.APP_NAME == "MiCTS") {
+            if (TriggerService.getSupportedServices().contains(TriggerService.CSHelper)) {
+                runCatching {
+                    VIMSHooker.hook(param)
+                }.onFailure { e ->
+                    log("hook VIMS fail", e)
+                }
             }
-        }
 
-        if (TriggerService.getSupportedServices().contains(TriggerService.CSService)) {
-            runCatching {
-                CSMSHooker.hook(param)
-            }.onFailure { e ->
-                log("hook CSMS fail", e)
+            if (TriggerService.getSupportedServices().contains(TriggerService.CSService)) {
+                runCatching {
+                    CSMSHooker.hook(param)
+                }.onFailure { e ->
+                    log("hook CSMS fail", e)
+                }
             }
         }
 
