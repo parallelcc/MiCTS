@@ -335,7 +335,7 @@ fun SettingsPage(
         }
 
         val isXiaomi = Build.MANUFACTURER == "Xiaomi"
-        val isMeizu = Build.MANUFACTURER == "Meizu"
+        val isMeizu = Build.MANUFACTURER == "meizu"
         if (isXiaomi) {
             ListItem(
                 headlineContent = { Text(stringResource(R.string.trigger_by_long_press_gesture_handle)) },
