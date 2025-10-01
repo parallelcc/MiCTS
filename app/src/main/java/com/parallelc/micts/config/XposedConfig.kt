@@ -40,7 +40,7 @@ object XposedConfig {
     val DEFAULT_CONFIG = mapOf<String, Any>(
         KEY_TRIGGER_SERVICE to TriggerService.getSupportedServices().last().ordinal,
         KEY_GESTURE_TRIGGER to (Build.MANUFACTURER == "Xiaomi"),
-        KEY_HOME_TRIGGER to (Build.MANUFACTURER == "Xiaomi"),
+        KEY_HOME_TRIGGER to (Build.MANUFACTURER == "Xiaomi" || Build.MANUFACTURER == "meizu"),
         KEY_DEVICE_SPOOF to true,
         KEY_SPOOF_MANUFACTURER to "Google",
         KEY_SPOOF_BRAND to "google",
