@@ -334,7 +334,9 @@ fun SettingsPage(
             )
         }
 
-        if (Build.MANUFACTURER == "Xiaomi") {
+        val isXiaomi = Build.MANUFACTURER == "Xiaomi"
+        val isMeizu = Build.MANUFACTURER == "meizu"
+        if (isXiaomi) {
             ListItem(
                 headlineContent = { Text(stringResource(R.string.trigger_by_long_press_gesture_handle)) },
                 trailingContent = {
@@ -344,7 +346,9 @@ fun SettingsPage(
                     )
                 }
             )
+        }
 
+        if (isXiaomi || isMeizu) {
             ListItem(
                 headlineContent = { Text(stringResource(R.string.trigger_by_long_press_home_button)) },
                 trailingContent = {

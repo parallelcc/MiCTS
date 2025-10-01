@@ -123,6 +123,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 if (Build.BRAND == "POCO" && scope.contains("com.mi.android.globallauncher") == false) {
                     _xposedService.value?.requestScope("com.mi.android.globallauncher", object: OnScopeEventListener{})
                 }
+                if (Build.MANUFACTURER == "meizu" && scope.contains("com.android.systemui") == false) {
+                    _xposedService.value?.requestScope("com.android.systemui", object : OnScopeEventListener {})
+                }
             }
             XposedConfig.KEY_DEVICE_SPOOF -> {
                 if (scope.contains("com.google.android.googlequicksearchbox") == false) {
