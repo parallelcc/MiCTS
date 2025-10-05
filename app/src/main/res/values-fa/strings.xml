@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tile_label">حلقه جستجو</string>
+    <string name="xposed_description">قابلیت «حلقه جسنجو» را در هر دستگاه اندروید ۹ تا ۱۵ فعال کنید</string>
+    <string name="title_activity_settings">تنظیمات</string>
+    <string name="trigger_failed">فعال‌سازی ناموفق بود!</string>
+    <string name="app_settings">تنظیمات برنامه</string>
+    <string name="default_trigger_delay">تأخیر پیش‌فرض فعال‌سازی</string>
+    <string name="tile_trigger_delay">تأخیر فعال‌سازی از طریق کاشی</string>
+    <string name="vibrate">لرزش</string>
+    <string name="async_trigger">فعال‌سازی ناهمزمان</string>
+    <string name="module_settings">تنظیمات ماژول</string>
+    <string name="access_xposed_service_failed">دسترسی به سرویس Xposed ناموفق بود</string>
+    <string name="system_trigger_service">سرویس فعال‌سازی سیستم</string>
+    <string name="trigger_by_long_press_home_button">فعال‌سازی با فشردن طولانی دکمه خانه</string>
+    <string name="trigger_by_long_press_gesture_handle">فعال‌سازی با فشردن طولانی نوار اشاره</string>
+    <string name="device_spoof_for_google">جعل هویت دستگاه برای گوگل</string>
+    <string name="manufacturer">شرکت سازنده</string>
+    <string name="brand">برند</string>
+    <string name="model">مدل</string>
+    <string name="device">دستگاه</string>
+    <string name="about">درباره</string>
+    <string name="language">زبان</string>
+    <string name="follow_system">پیروی از سیستم</string>
+</resources>
