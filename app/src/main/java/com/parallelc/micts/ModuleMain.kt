@@ -13,6 +13,7 @@ import com.parallelc.micts.config.XposedConfig.KEY_SPOOF_MODEL
 import com.parallelc.micts.hooker.CSMSHooker
 import com.parallelc.micts.hooker.InvokeOmniHooker
 import com.parallelc.micts.hooker.LongPressHomeHooker
+import com.parallelc.micts.hooker.NavBarActionsConfigHooker
 import com.parallelc.micts.hooker.NavStubGestureEventManagerHooker
 import com.parallelc.micts.hooker.NavStubViewHooker
 import com.parallelc.micts.hooker.VIMSHooker
@@ -100,6 +101,14 @@ class ModuleMain(base: XposedInterface, param: ModuleLoadedParam) : XposedModule
                 val DEVICE = buildClass.getDeclaredField("DEVICE")
                 DEVICE.isAccessible = true
                 DEVICE.set(null, prefs.getString(KEY_SPOOF_DEVICE, DEFAULT_CONFIG[KEY_SPOOF_DEVICE] as String))
+            }
+            "com.android.systemui" -> {
+                if (Build.MANUFACTURER != "meizu") return
+                runCatching {
+                    NavBarActionsConfigHooker.hook(param)
+                }.onFailure { e ->
+                    log("hook NavBarActionsConfig fail", e)
+                }
             }
         }
     }
