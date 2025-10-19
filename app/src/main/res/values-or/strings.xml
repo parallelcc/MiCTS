@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tile_label">ଗୋଲ କରି ସର୍ଚ</string>
+    <string name="xposed_description">ଯେକୌଣସି ଆଣ୍ଡ୍ରଏଡ୍ 9–15 ଡିଭାଇସରେ ଗୋଲ କରି ସର୍ଚ ଟ୍ରିଗର୍ କରନ୍ତୁ</string>
+    <string name="title_activity_settings">ସେଟିଂସ୍</string>
+    <string name="trigger_failed">ଟ୍ରିଗର୍ ବିଫଳ ହେଲା!</string>
+    <string name="app_settings">ଆପ୍ ସେଟିଂସ୍</string>
+    <string name="default_trigger_delay">ଡିଫଲ୍ଟ ଟ୍ରିଗର୍ ବିଳମ୍ବ</string>
+    <string name="tile_trigger_delay">ଟାଇଲ୍ ଟ୍ରିଗର୍ ବିଳମ୍ବ</string>
+    <string name="vibrate">କମ୍ପନ</string>
+    <string name="async_trigger">ଏସିଙ୍କ୍ ଟ୍ରିଗର୍</string>
+    <string name="module_settings">ମଡ୍ୟୁଲ୍ ସେଟିଂସ୍</string>
+    <string name="access_xposed_service_failed">Xposed ସର୍ଭିସ ଆକ୍ସେସ୍ ବିଫଳ ହେଲା</string>
+    <string name="system_trigger_service">ସିଷ୍ଟମ୍ ଟ୍ରିଗର୍ ସର୍ଭିସ</string>
+    <string name="trigger_by_long_press_home_button">ହୋମ୍ ବଟନ୍ ଦୀର୍ଘ ସମୟ ଦବାଇ ଟ୍ରିଗର୍ କରନ୍ତୁ</string>
+    <string name="trigger_by_long_press_gesture_handle">ଜେସ୍ଚର୍ ହ୍ୟାଣ୍ଡେଲ୍ ଦୀର୍ଘ ସମୟ ଦବାଇ ଟ୍ରିଗର୍ କରନ୍ତୁ</string>
+    <string name="device_spoof_for_google">Google ପାଇଁ ଡିଭାଇସ୍ ସ୍ପୁଫ୍</string>
+    <string name="manufacturer">ନିର୍ମାତା</string>
+    <string name="brand">ବ୍ରାଣ୍ଡ୍</string>
+    <string name="model">ମଡେଲ୍</string>
+    <string name="device">ଡିଭାଇସ୍</string>
+    <string name="about">ବିଷୟରେ</string>
+    <string name="language">ଭାଷା</string>
+    <string name="follow_system">ସିଷ୍ଟମ୍ ଅନୁସାରେ</string>
+</resources>
