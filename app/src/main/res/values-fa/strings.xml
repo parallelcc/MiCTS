@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">حلقه جستجو</string>
-    <string name="xposed_description">قابلیت «حلقه جسنجو» را در هر دستگاه اندروید ۹ تا ۱۵ فعال کنید</string>
+    <string name="xposed_description">قابلیت «حلقه جستجو» را در هر دستگاه اندروید ۹ تا ۱۵ فعال کنید</string>
     <string name="title_activity_settings">تنظیمات</string>
     <string name="trigger_failed">فعال‌سازی ناموفق بود!</string>
     <string name="app_settings">تنظیمات برنامه</string>

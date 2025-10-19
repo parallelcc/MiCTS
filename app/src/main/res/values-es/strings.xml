@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tile_label">Busca con un círculo</string>
+    <string name="xposed_description">Activar Busca con un círculo en cualquier dispositivo Android 9–15</string>
+    <string name="title_activity_settings">Configuración</string>
+    <string name="trigger_failed">¡No se pudo activar!</string>
+    <string name="app_settings">Ajustes de la aplicación</string>
+    <string name="default_trigger_delay">Retraso de activación predeterminado</string>
+    <string name="tile_trigger_delay">Retraso de activación del mosaico</string>
+    <string name="vibrate">Vibrar</string>
+    <string name="async_trigger">Activación asíncrona</string>
+    <string name="module_settings">Ajustes del módulo</string>
+    <string name="access_xposed_service_failed">Error al acceder al servicio xposed</string>
+    <string name="system_trigger_service">Servicio de activación del sistema</string>
+    <string name="trigger_by_long_press_home_button">Activar al mantener pulsado el botón de inicio</string>
+    <string name="trigger_by_long_press_gesture_handle">Activar al mantener pulsada la barra de gestos</string>
+    <string name="device_spoof_for_google">Simular dispositivo para Google</string>
+    <string name="manufacturer">Fabricante</string>
+    <string name="brand">Marca</string>
+    <string name="model">Modelo</string>
+    <string name="device">Dispositivo</string>
+    <string name="about">Acerca de</string>
+    <string name="language">Idioma</string>
+    <string name="follow_system">Predeterminado del sistema</string>
+</resources>
