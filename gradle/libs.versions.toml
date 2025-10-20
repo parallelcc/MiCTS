@@ -8,9 +8,9 @@ xposed-api = "100"
 xposed-service = "100-1.0.0"
 lifecycle-runtime-ktx = "2.9.4"
 activity-compose = "1.11.0"
-compose-bom = "2025.09.00"
-animation-core-android = "1.9.1"
-animation-android = "1.9.1"
+compose-bom = "2025.10.00"
+animation-core-android = "1.9.3"
+animation-android = "1.9.3"
 
 [libraries]
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version.ref = "hiddenapibypass" }
