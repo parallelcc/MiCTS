@@ -2,15 +2,15 @@
 accompanist-drawablepainter = "0.37.3"
 agp = "8.13.0"
 hiddenapibypass = "6.1"
-kotlin = "2.2.20"
+kotlin = "2.2.21"
 material = "1.13.0"
 xposed-api = "100"
 xposed-service = "100-1.0.0"
 lifecycle-runtime-ktx = "2.9.4"
 activity-compose = "1.11.0"
-compose-bom = "2025.09.00"
-animation-core-android = "1.9.1"
-animation-android = "1.9.1"
+compose-bom = "2025.10.01"
+animation-core-android = "1.9.4"
+animation-android = "1.9.4"
 
 [libraries]
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version.ref = "hiddenapibypass" }
