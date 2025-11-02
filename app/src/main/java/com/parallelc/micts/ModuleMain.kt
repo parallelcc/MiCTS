@@ -14,6 +14,7 @@ import com.parallelc.micts.hooker.CSMSHooker
 import com.parallelc.micts.hooker.InvokeOmniHooker
 import com.parallelc.micts.hooker.LongPressHomeHooker
 import com.parallelc.micts.hooker.NavBarActionsConfigHooker
+import com.parallelc.micts.hooker.NavBarEventHelperHooker
 import com.parallelc.micts.hooker.NavStubGestureEventManagerHooker
 import com.parallelc.micts.hooker.NavStubViewHooker
 import com.parallelc.micts.hooker.VIMSHooker
@@ -78,6 +79,10 @@ class ModuleMain(base: XposedInterface, param: ModuleLoadedParam) : XposedModule
                     hook(circleToSearchHelper.getDeclaredMethod("invokeOmni", Context::class.java, Int::class.java, Int::class.java), InvokeOmniHooker::class.java)
                 }.onFailure { e ->
                     log("hook CircleToSearchHelper fail", e)
+                }.recoverCatching {
+                    NavBarEventHelperHooker.hook(param)
+                }.onFailure { e ->
+                    log("hook NavBarEventHelper fail", e)
                 }.isSuccess
 
                 runCatching {
