@@ -96,6 +96,8 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.animation.core.android)
     implementation(libs.animation.android)
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.accompanist.drawablepainter)
