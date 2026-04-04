@@ -113,23 +113,23 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         when (key) {
             XposedConfig.KEY_TRIGGER_SERVICE, XposedConfig.KEY_GESTURE_TRIGGER -> {
                 if (scope.contains("system") == false) {
-                    _xposedService.value?.requestScope("system", object: OnScopeEventListener{})
+                    _xposedService.value?.requestScope(listOf("system"), object: OnScopeEventListener{})
                 }
             }
             XposedConfig.KEY_HOME_TRIGGER -> {
                 if (Build.BRAND == "Xiaomi" && scope.contains("com.miui.home") == false) {
-                    _xposedService.value?.requestScope("com.miui.home", object : OnScopeEventListener {})
+                    _xposedService.value?.requestScope(listOf("com.miui.home"), object : OnScopeEventListener {})
                 }
                 if (Build.BRAND == "POCO" && scope.contains("com.mi.android.globallauncher") == false) {
-                    _xposedService.value?.requestScope("com.mi.android.globallauncher", object: OnScopeEventListener{})
+                    _xposedService.value?.requestScope(listOf("com.mi.android.globallauncher"), object: OnScopeEventListener{})
                 }
                 if (Build.MANUFACTURER == "meizu" && scope.contains("com.android.systemui") == false) {
-                    _xposedService.value?.requestScope("com.android.systemui", object : OnScopeEventListener {})
+                    _xposedService.value?.requestScope(listOf("com.android.systemui"), object : OnScopeEventListener {})
                 }
             }
             XposedConfig.KEY_DEVICE_SPOOF -> {
                 if (scope.contains("com.google.android.googlequicksearchbox") == false) {
-                    _xposedService.value?.requestScope("com.google.android.googlequicksearchbox", object : OnScopeEventListener {})
+                    _xposedService.value?.requestScope(listOf("com.google.android.googlequicksearchbox"), object : OnScopeEventListener {})
                 }
             }
         }

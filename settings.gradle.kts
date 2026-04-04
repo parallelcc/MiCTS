@@ -25,5 +25,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "MiCTS"
-include(":app", ":libxposed-compat")
+include(":app")
  

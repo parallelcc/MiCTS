@@ -92,7 +92,6 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.accompanist.drawablepainter)
-    compileOnly(project(":libxposed-compat"))
     compileOnly(libs.libxposed.api)
     implementation(libs.libxposed.service)
     implementation(libs.hiddenapibypass)
