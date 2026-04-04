@@ -2,6 +2,7 @@ package com.parallelc.micts
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import com.parallelc.micts.config.TriggerService
 import com.parallelc.micts.config.XposedConfig.CONFIG_NAME
 import com.parallelc.micts.config.XposedConfig.DEFAULT_CONFIG
@@ -18,29 +19,28 @@ import com.parallelc.micts.hooker.NavBarEventHelperHooker
 import com.parallelc.micts.hooker.NavStubGestureEventManagerHooker
 import com.parallelc.micts.hooker.NavStubViewHooker
 import com.parallelc.micts.hooker.VIMSHooker
-import io.github.libxposed.api.XposedInterface
 import io.github.libxposed.api.XposedModule
 import io.github.libxposed.api.XposedModuleInterface.ModuleLoadedParam
-import io.github.libxposed.api.XposedModuleInterface.PackageLoadedParam
-import io.github.libxposed.api.XposedModuleInterface.SystemServerLoadedParam
+import io.github.libxposed.api.XposedModuleInterface.PackageReadyParam
+import io.github.libxposed.api.XposedModuleInterface.SystemServerStartingParam
 
 var module: ModuleMain? = null
 
-class ModuleMain(base: XposedInterface, param: ModuleLoadedParam) : XposedModule(base, param) {
+class ModuleMain : XposedModule() {
 
-    init {
+    override fun onModuleLoaded(param: ModuleLoadedParam) {
         module = this
     }
 
-    override fun onSystemServerLoaded(param: SystemServerLoadedParam) {
-        super.onSystemServerLoaded(param)
+    override fun onSystemServerStarting(param: SystemServerStartingParam) {
+        super.onSystemServerStarting(param)
 
         if (BuildConfig.APP_NAME == "MiCTS") {
             if (TriggerService.getSupportedServices().contains(TriggerService.CSHelper)) {
                 runCatching {
                     VIMSHooker.hook(param)
                 }.onFailure { e ->
-                    log("hook VIMS fail", e)
+                    log(Log.ERROR, "MiCTS", "hook VIMS fail", e)
                 }
             }
 
@@ -48,7 +48,7 @@ class ModuleMain(base: XposedInterface, param: ModuleLoadedParam) : XposedModule
                 runCatching {
                     CSMSHooker.hook(param)
                 }.onFailure { e ->
-                    log("hook CSMS fail", e)
+                    log(Log.ERROR, "MiCTS", "hook CSMS fail", e)
                 }
             }
         }
@@ -57,13 +57,13 @@ class ModuleMain(base: XposedInterface, param: ModuleLoadedParam) : XposedModule
             runCatching {
                 LongPressHomeHooker.hook(param)
             }.onFailure { e ->
-                log("hook LongPressHome fail", e)
+                log(Log.ERROR, "MiCTS", "hook LongPressHome fail", e)
             }
         }
     }
 
-    override fun onPackageLoaded(param: PackageLoadedParam) {
-        super.onPackageLoaded(param)
+    override fun onPackageReady(param: PackageReadyParam) {
+        super.onPackageReady(param)
         if (!param.isFirstPackage) return
 
         val prefs = getRemotePreferences(CONFIG_NAME)
@@ -73,22 +73,24 @@ class ModuleMain(base: XposedInterface, param: ModuleLoadedParam) : XposedModule
                 val skipHookTouch = runCatching {
                     NavStubGestureEventManagerHooker.hook(param)
                 }.onFailure { e ->
-                    log("hook NavStubGestureEventManager fail", e)
+                    log(Log.ERROR, "MiCTS", "hook NavStubGestureEventManager fail", e)
                 }.recoverCatching {
                     val circleToSearchHelper = param.classLoader.loadClass("com.miui.home.recents.cts.CircleToSearchHelper")
-                    hook(circleToSearchHelper.getDeclaredMethod("invokeOmni", Context::class.java, Int::class.java, Int::class.java), InvokeOmniHooker::class.java)
+                    hook(
+                        circleToSearchHelper.getDeclaredMethod("invokeOmni", Context::class.java, Int::class.java, Int::class.java)
+                    ).intercept(InvokeOmniHooker())
                 }.onFailure { e ->
-                    log("hook CircleToSearchHelper fail", e)
+                    log(Log.ERROR, "MiCTS", "hook CircleToSearchHelper fail", e)
                 }.recoverCatching {
                     NavBarEventHelperHooker.hook(param)
                 }.onFailure { e ->
-                    log("hook NavBarEventHelper fail", e)
+                    log(Log.ERROR, "MiCTS", "hook NavBarEventHelper fail", e)
                 }.isSuccess
 
                 runCatching {
                     NavStubViewHooker.hook(param, skipHookTouch)
                 }.onFailure { e ->
-                    log("hook NavStubView fail", e)
+                    log(Log.ERROR, "MiCTS", "hook NavStubView fail", e)
                 }
             }
             "com.google.android.googlequicksearchbox" -> {
@@ -112,7 +114,7 @@ class ModuleMain(base: XposedInterface, param: ModuleLoadedParam) : XposedModule
                 runCatching {
                     NavBarActionsConfigHooker.hook(param)
                 }.onFailure { e ->
-                    log("hook NavBarActionsConfig fail", e)
+                    log(Log.ERROR, "MiCTS", "hook NavBarActionsConfig fail", e)
                 }
             }
         }

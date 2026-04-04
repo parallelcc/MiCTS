@@ -49,7 +49,7 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
         }
     }.onFailure { e ->
         val errMsg = "triggerCircleToSearch invoke omni failed: " + e.stackTraceToString()
-        module?.log(errMsg) ?: Log.e(LOG_TAG, errMsg)
+        module?.log(Log.ERROR, LOG_TAG, errMsg) ?: Log.e(LOG_TAG, errMsg)
     }.getOrDefault(false)
     if (result && vibrate && context != null) {
         runCatching {
@@ -66,7 +66,7 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
             }
         }.onFailure { e ->
             val errMsg = "triggerCircleToSearch vibrate failed: " + e.stackTraceToString()
-            module?.log(errMsg) ?: Log.e(LOG_TAG, errMsg)
+            module?.log(Log.ERROR, LOG_TAG, errMsg) ?: Log.e(LOG_TAG, errMsg)
         }
     }
     return result

@@ -7,15 +7,13 @@ import com.parallelc.micts.config.XposedConfig.KEY_HOME_TRIGGER
 import com.parallelc.micts.config.XposedConfig.KEY_VIBRATE
 import com.parallelc.micts.module
 import com.parallelc.micts.ui.activity.triggerCircleToSearch
-import io.github.libxposed.api.XposedInterface.BeforeHookCallback
+import io.github.libxposed.api.XposedInterface.Chain
 import io.github.libxposed.api.XposedInterface.Hooker
-import io.github.libxposed.api.XposedModuleInterface.PackageLoadedParam
-import io.github.libxposed.api.annotations.BeforeInvocation
-import io.github.libxposed.api.annotations.XposedHooker
+import io.github.libxposed.api.XposedModuleInterface.PackageReadyParam
 
 class NavBarActionsConfigHooker {
     companion object {
-        fun hook(param: PackageLoadedParam) {
+        fun hook(param: PackageReadyParam) {
             val navBarActionsConfig =
                 param.classLoader.loadClass("com.flyme.systemui.navigationbar.actions.NavBarActionsConfig")
             module!!.hook(
@@ -23,29 +21,23 @@ class NavBarActionsConfigHooker {
                     "helpStartAI",
                     Context::class.java,
                     String::class.java
-                ),
-                HelpStartAiHooker::class.java
-            )
+                )
+            ).intercept(HelpStartAiHooker())
         }
     }
 
-    @XposedHooker
     class HelpStartAiHooker : Hooker {
-        companion object {
-            @JvmStatic
-            @BeforeInvocation
-            fun before(callback: BeforeHookCallback) {
-                val prefs = module!!.getRemotePreferences(CONFIG_NAME)
-                if (!prefs.getBoolean(KEY_HOME_TRIGGER, DEFAULT_CONFIG[KEY_HOME_TRIGGER] as Boolean)) {
-                    return
-                }
-                triggerCircleToSearch(
-                    1,
-                    callback.args[0] as? Context,
-                    prefs.getBoolean(KEY_VIBRATE, DEFAULT_CONFIG[KEY_VIBRATE] as Boolean)
-                )
-                callback.returnAndSkip(null)
+        override fun intercept(chain: Chain): Any? {
+            val prefs = module!!.getRemotePreferences(CONFIG_NAME)
+            if (!prefs.getBoolean(KEY_HOME_TRIGGER, DEFAULT_CONFIG[KEY_HOME_TRIGGER] as Boolean)) {
+                return chain.proceed()
             }
+            triggerCircleToSearch(
+                1,
+                chain.args[0] as? Context,
+                prefs.getBoolean(KEY_VIBRATE, DEFAULT_CONFIG[KEY_VIBRATE] as Boolean)
+            )
+            return null
         }
     }
 }
