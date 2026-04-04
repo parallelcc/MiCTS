@@ -1,6 +1,7 @@
+import com.android.build.api.variant.impl.VariantOutputImpl
+
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.lsplugin.jgit)
     alias(libs.plugins.lsplugin.apksign)
     alias(libs.plugins.kotlin.compose)
@@ -40,6 +41,11 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+        resValues = true
+    }
+
     flavorDimensions += "app"
 
     productFlavors {
@@ -59,26 +65,27 @@ android {
         }
     }
 
-    applicationVariants.all {
-        val variant = this
-        variant.outputs
-            .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
-            .forEach { output ->
-                output.outputFileName = "MiCTS_${variant.versionName}_${variant.versionCode}_${variant.baseName}.apk"
-            }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
     buildFeatures {
         compose = true
         buildConfig = true
     }
+}
+
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.forEach { output ->
+            require(output is VariantOutputImpl)
+
+            val vName = output.versionName.get()
+            val vCode = output.versionCode.get()
+
+            output.outputFileName.set("MiCTS_${vName}_${vCode}_${variant.name}.apk")
+        }
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 dependencies {
