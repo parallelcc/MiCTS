@@ -4,7 +4,7 @@
 
 简体中文&nbsp;&nbsp;|&nbsp;&nbsp;[English](/README_en.md)&nbsp;&nbsp;|&nbsp;&nbsp;[Русский](/README_ru.md)&nbsp;&nbsp;|&nbsp;&nbsp;[Türkçe](/README_tr.md)&nbsp;&nbsp;|&nbsp;&nbsp;[فارسی](/README_fa.md)
 
-在任意Android 9–15设备上触发圈定即搜（Circle to Search）功能
+在任意Android 9–16设备上触发圈定即搜（Circle to Search）功能
 
 *本应用只负责触发圈定即搜，无法处理触发成功后可能出现的问题*
 
@@ -41,7 +41,7 @@
 需要在LSPosed里激活模块
 
 - 系统触发服务：触发所使用的系统服务，只会显示当前支持的选项，依赖作用域选择系统框架
-   - VIS：支持Android 9–15，需要将默认助理应用设置为Google，触发时一些设备的屏幕边缘会闪，没有激活模块的情况下只能使用此服务
+   - VIS：支持Android 9–16，需要将默认助理应用设置为Google，触发时一些设备的屏幕边缘会闪，没有激活模块的情况下只能使用此服务
    - CSHelper：支持Android 14 QPR3及以上，不需要设置默认助理应用，触发时屏幕边缘不会闪
    - CSService：支持Android 15及以上，圈定即搜专用的服务，效果同CSHelper
 

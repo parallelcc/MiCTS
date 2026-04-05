@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">圈定即搜</string>
-    <string name="xposed_description">在任意Android 9–15设备上触发圈定即搜（Circle to Search）功能</string>
+    <string name="xposed_description">在任意Android 9–16设备上触发圈定即搜（Circle to Search）功能</string>
     <string name="title_activity_settings">设置</string>
     <string name="trigger_failed">触发失败！</string>
     <string name="app_settings">应用设置</string>

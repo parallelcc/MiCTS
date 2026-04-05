@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">ଗୋଲ କରି ସର୍ଚ</string>
-    <string name="xposed_description">ଯେକୌଣସି ଆଣ୍ଡ୍ରଏଡ୍ 9–15 ଡିଭାଇସରେ ଗୋଲ କରି ସର୍ଚ ଟ୍ରିଗର୍ କରନ୍ତୁ</string>
+    <string name="xposed_description">ଯେକୌଣସି ଆଣ୍ଡ୍ରଏଡ୍ 9–16 ଡିଭାଇସରେ ଗୋଲ କରି ସର୍ଚ ଟ୍ରିଗର୍ କରନ୍ତୁ</string>
     <string name="title_activity_settings">ସେଟିଂସ୍</string>
     <string name="trigger_failed">ଟ୍ରିଗର୍ ବିଫଳ ହେଲା!</string>
     <string name="app_settings">ଆପ୍ ସେଟିଂସ୍</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">دائرة للبحث</string>
-    <string name="xposed_description">تفعيل دائرة البحث على أي جهاز يعمل بنظام أندرويد 9 إلى 15</string>
+    <string name="xposed_description">تفعيل دائرة البحث على أي جهاز يعمل بنظام أندرويد 9 إلى 16</string>
     <string name="title_activity_settings">إعدادات</string>
     <string name="trigger_failed">فشل التفعيل</string>
     <string name="app_settings">إعدادات التطبيق</string>

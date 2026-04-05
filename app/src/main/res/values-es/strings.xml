@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">Busca con un círculo</string>
-    <string name="xposed_description">Activar Busca con un círculo en cualquier dispositivo Android 9–15</string>
+    <string name="xposed_description">Activar Busca con un círculo en cualquier dispositivo Android 9–16</string>
     <string name="title_activity_settings">Configuración</string>
     <string name="trigger_failed">¡No se pudo activar!</string>
     <string name="app_settings">Ajustes de la aplicación</string>

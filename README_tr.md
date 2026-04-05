@@ -4,7 +4,7 @@
 
 [简体中文](/README.md)&nbsp;&nbsp;|&nbsp;&nbsp;[English](/README_en.md)&nbsp;&nbsp;|&nbsp;&nbsp;[Русский](/README_ru.md)&nbsp;&nbsp;|&nbsp;&nbsp;Türkçe&nbsp;&nbsp;|&nbsp;&nbsp;[فارسی](/README_fa.md)
 
-Circle to Search özelliğini herhangi bir Android 9-15 cihazda tetikleyin
+Circle to Search özelliğini herhangi bir Android 9-16 cihazda tetikleyin
 
 *Bu uygulama yalnızca Circle to Search'ü tetiklemeyi amaçlar ve başarıyla tetiklendikten sonra oluşabilecek sorunları ele alamaz*
 
@@ -41,7 +41,7 @@ Circle to Search özelliğini herhangi bir Android 9-15 cihazda tetikleyin
 ### Modül Ayarları
 LSPosed'de modülü etkinleştirmeniz gerekir
 - Sistem tetikleme servisi: Tetikleme tarafından kullanılan sistem hizmeti. Yalnızca desteklenen hizmetler gösterilecektir. LSPosed'de kapsama Sistem Çerçevesi eklemeniz gerekir
-   - VIS: Android 9-15'i destekler. Google'ı varsayılan asistan uygulaması olarak ayarlamanız gerekir ve bazı cihazlar için tetikleme sırasında ekran kenarı yanıp söner. Modül etkinleştirilmezse, yalnızca bu hizmet kullanılacaktır.
+   - VIS: Android 9-16'i destekler. Google'ı varsayılan asistan uygulaması olarak ayarlamanız gerekir ve bazı cihazlar için tetikleme sırasında ekran kenarı yanıp söner. Modül etkinleştirilmezse, yalnızca bu hizmet kullanılacaktır.
    - CSHelper: Android 14 QPR3 ve üzeri sürümleri destekler. Google'ı varsayılan asistan uygulaması olarak ayarlamanıza gerek yoktur ve tetikleme sırasında ekran kenarı yanıp sönmez.
    - CSService: Android 15 ve üzeri sürümleri destekler. Circle to Search için özel bir hizmet, CSHelper ile aynı etkiyi verir
 

@@ -4,7 +4,7 @@
 
 [简体中文](/README.md)&nbsp;&nbsp;|&nbsp;&nbsp;English&nbsp;&nbsp;|&nbsp;&nbsp;[Русский](/README_ru.md)&nbsp;&nbsp;|&nbsp;&nbsp;[Türkçe](/README_tr.md)&nbsp;&nbsp;|&nbsp;&nbsp;[فارسی](/README_fa.md)
 
-Trigger Circle to Search on any Android 9–15 device
+Trigger Circle to Search on any Android 9–16 device
 
 *This app only aims to trigger Circle to Search and cannot handle issues that may occur after triggering successfully*
 
@@ -41,7 +41,7 @@ Trigger Circle to Search on any Android 9–15 device
 ### Module Settings
 Need to activate the module in LSPosed
 - System trigger service: The system service used by triggering. Only the services supported will be shown. Need to add System Framework to the scope in LSPosed
-   - VIS: Supports on Android 9-15. Need to set Google as the default assistant app and the screen edge will flash when triggering for some devices. If the module is not activated, only this service will be used
+   - VIS: Supports on Android 9-16. Need to set Google as the default assistant app and the screen edge will flash when triggering for some devices. If the module is not activated, only this service will be used
    - CSHelper: Supports on Android 14 QPR3 and above. Don’t need to set Google as the default assistant app and the screen edge will not flash when triggering
    - CSService: Supports on Android 15 and above. A dedicated service for Circle to Search, same effect as CSHelper
 

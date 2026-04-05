@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">Circle to Search</string>
-    <string name="xposed_description">Circle to Search özelliğini herhangi bir Android 9-15 cihazda tetikleme</string>
+    <string name="xposed_description">Circle to Search özelliğini herhangi bir Android 9–16 cihazda tetikleme</string>
     <string name="title_activity_settings">Ayarlar</string>
     <string name="trigger_failed">Tetikleme başarısız!</string>
     <string name="app_settings">Uygulama Ayarları</string>

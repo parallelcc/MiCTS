@@ -24,7 +24,7 @@ android {
 
     defaultConfig {
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 36
         versionCode = commitCount
         versionName = latestTag
 
@@ -60,7 +60,7 @@ android {
             applicationId = "com.parallelc.vistrigger"
             resValue("string", "app_name", "VISTrigger")
             resValue("string", "tile_label", "VIS")
-            resValue("string", "xposed_description", "Trigger Voice Interaction Service on any Android 9–15 device")
+            resValue("string", "xposed_description", "Trigger Voice Interaction Service on any Android 9–16 device")
             buildConfigField("String", "APP_NAME", "\"VISTrigger\"")
         }
     }

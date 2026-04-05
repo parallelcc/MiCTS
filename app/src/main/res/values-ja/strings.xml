@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">かこって検索</string>
-    <string name="xposed_description">Android 9–15 のデバイスで、かこって検索をトリガーします</string>
+    <string name="xposed_description">Android 9–16 のデバイスで、かこって検索をトリガーします</string>
     <string name="title_activity_settings">設定</string>
     <string name="trigger_failed">トリガーに失敗しました！</string>
     <string name="app_settings">アプリの設定</string>

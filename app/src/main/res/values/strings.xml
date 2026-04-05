@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name" translatable="false">MiCTS</string>
     <string name="tile_label">Circle to Search</string>
-    <string name="xposed_description">Trigger Circle to Search on any Android 9–15 device</string>
+    <string name="xposed_description">Trigger Circle to Search on any Android 9–16 device</string>
     <string name="title_activity_settings">Settings</string>
     <string name="trigger_failed">Trigger failed!</string>
     <string name="app_settings">App Settings</string>

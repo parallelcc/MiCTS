@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tile_label">Κυκλώστε για Αναζήτηση</string>
-    <string name="xposed_description">Εκκινήστε το Κυκλώστε για Αναζήτηση σε οποιαδήποτε συσκευή με Android 9–15</string>
+    <string name="xposed_description">Εκκινήστε το Κυκλώστε για Αναζήτηση σε οποιαδήποτε συσκευή με Android 9–16</string>
     <string name="title_activity_settings">Ρυθμίσεις</string>
     <string name="trigger_failed">Το έναυσμα απέτυχε!</string>
     <string name="app_settings">Ρυθμίσεις Εφαρμογής</string>
