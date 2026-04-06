@@ -21,5 +21,8 @@
     <string name="device">裝置</string>
     <string name="about">關於</string>
     <string name="language">語言</string>
+    <string name="theme">主題</string>
     <string name="follow_system">系統預設</string>
+    <string name="light">淺色</string>
+    <string name="dark">深色</string>
 </resources>

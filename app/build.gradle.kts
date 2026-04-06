@@ -20,7 +20,7 @@ val latestTag = repo?.latestTag?.removePrefix("v") ?: "1.0"
 
 android {
     namespace = "com.parallelc.micts"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 28
@@ -92,8 +92,7 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
-    implementation(libs.material)
-    implementation(libs.material3)
+    implementation(libs.miuix.ui)
     implementation(libs.animation.core.android)
     implementation(libs.animation.android)
     implementation(libs.androidx.material.icons.core)

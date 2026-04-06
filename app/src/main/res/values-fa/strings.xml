@@ -21,5 +21,8 @@
     <string name="device">دستگاه</string>
     <string name="about">درباره</string>
     <string name="language">زبان</string>
+    <string name="theme">پوسته</string>
     <string name="follow_system">پیروی از سیستم</string>
+    <string name="light">روشن</string>
+    <string name="dark">تاریک</string>
 </resources>

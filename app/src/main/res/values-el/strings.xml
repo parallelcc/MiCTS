@@ -21,5 +21,8 @@
     <string name="device">Συσκευή</string>
     <string name="about">Σχετικά</string>
     <string name="language">Γλώσσα</string>
+    <string name="theme">Θέμα</string>
     <string name="follow_system">Σύμφωνα με το σύστημα</string>
+    <string name="light">Φωτεινό</string>
+    <string name="dark">Σκοτεινό</string>
 </resources>

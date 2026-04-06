@@ -3,7 +3,7 @@ accompanist-drawablepainter = "0.37.3"
 agp = "9.1.0"
 hiddenapibypass = "6.1"
 kotlin = "2.3.20"
-material = "1.13.0"
+miuix = "0.9.0"
 xposed-api = "101.0.1"
 xposed-service = "101.0.0"
 lifecycle-runtime-ktx = "2.10.0"
@@ -19,8 +19,6 @@ libxposed-service = { group = "io.github.libxposed", name = "service", version.r
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-material = { module = "com.google.android.material:material", version.ref = "material" }
-material3 = { group = "androidx.compose.material3", name = "material3" }
 animation-core-android = { group = "androidx.compose.animation", name = "animation-core-android", version.ref = "animation-core-android" }
 animation-android = { group = "androidx.compose.animation", name = "animation-android", version.ref = "animation-android" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -28,6 +26,7 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 accompanist-drawablepainter = { group = "com.google.accompanist", name = "accompanist-drawablepainter", version.ref = "accompanist-drawablepainter" }
 androidx-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
 androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+miuix-ui = { group = "top.yukonga.miuix.kmp", name = "miuix-ui-android", version.ref = "miuix" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

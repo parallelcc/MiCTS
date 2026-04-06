@@ -21,5 +21,8 @@
     <string name="device">ଡିଭାଇସ୍</string>
     <string name="about">ବିଷୟରେ</string>
     <string name="language">ଭାଷା</string>
+    <string name="theme">ଥିମ୍</string>
     <string name="follow_system">ସିଷ୍ଟମ୍ ଅନୁସାରେ</string>
+    <string name="light">ଆଲୋକ</string>
+    <string name="dark">ଅନ୍ଧାର</string>
 </resources>

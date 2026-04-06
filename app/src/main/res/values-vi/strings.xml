@@ -21,5 +21,8 @@
     <string name="device">Thiết bị</string>
     <string name="about">Giới thiệu</string>
     <string name="language">Ngôn ngữ</string>
+    <string name="theme">Giao diện</string>
     <string name="follow_system">Theo hệ thống</string>
+    <string name="light">Sáng</string>
+    <string name="dark">Tối</string>
 </resources>

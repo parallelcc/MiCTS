@@ -21,5 +21,8 @@
     <string name="device">Cihaz</string>
     <string name="about">Hakkında</string>
     <string name="language">Dil</string>
+    <string name="theme">Tema</string>
     <string name="follow_system">Sisteme uy</string>
+    <string name="light">Açık</string>
+    <string name="dark">Koyu</string>
 </resources>

@@ -21,5 +21,8 @@
     <string name="device">معلومات الجهاز</string>
     <string name="about">حول</string>
     <string name="language">اللغة</string>
+    <string name="theme">المظهر</string>
     <string name="follow_system">اتبع النظام</string>
+    <string name="light">فاتح</string>
+    <string name="dark">داكن</string>
 </resources>
