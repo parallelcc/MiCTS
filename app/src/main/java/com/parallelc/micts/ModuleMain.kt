@@ -13,6 +13,7 @@ import com.parallelc.micts.config.XposedConfig.KEY_SPOOF_MANUFACTURER
 import com.parallelc.micts.config.XposedConfig.KEY_SPOOF_MODEL
 import com.parallelc.micts.hooker.CSMSHooker
 import com.parallelc.micts.hooker.InvokeOmniHooker
+import com.parallelc.micts.hooker.BaseMiuiPWMHooker
 import com.parallelc.micts.hooker.LongPressHomeHooker
 import com.parallelc.micts.hooker.NavBarActionsConfigHooker
 import com.parallelc.micts.hooker.NavBarEventHelperHooker
@@ -58,6 +59,10 @@ class ModuleMain : XposedModule() {
                 LongPressHomeHooker.hook(param)
             }.onFailure { e ->
                 log(Log.ERROR, "MiCTS", "hook LongPressHome fail", e)
+            }.recoverCatching {
+                BaseMiuiPWMHooker.hook(param)
+            }.onFailure { e ->
+                log(Log.ERROR, "MiCTS", "hook BaseMiuiPWM fail", e)
             }
         }
     }
