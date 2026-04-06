@@ -35,16 +35,11 @@ class NavStubViewHooker {
             if (skipHookTouch) return
             runCatching { navStubView.getDeclaredField("mCheckLongPress") }
                 .onSuccess { throw Exception("mCheckLongPress exists") }
-            mCurrAction = navStubView.getDeclaredField("mCurrAction")
-            mCurrAction.isAccessible = true
-            mCurrX = navStubView.getDeclaredField("mCurrX")
-            mCurrX.isAccessible = true
-            mInitX = navStubView.getDeclaredField("mInitX")
-            mInitX.isAccessible = true
-            mCurrY = navStubView.getDeclaredField("mCurrY")
-            mCurrY.isAccessible = true
-            mInitY = navStubView.getDeclaredField("mInitY")
-            mInitY.isAccessible = true
+            mCurrAction = navStubView.getDeclaredField("mCurrAction").also { it.isAccessible = true }
+            mCurrX = navStubView.getDeclaredField("mCurrX").also { it.isAccessible = true }
+            mInitX = navStubView.getDeclaredField("mInitX").also { it.isAccessible = true }
+            mCurrY = navStubView.getDeclaredField("mCurrY").also { it.isAccessible = true }
+            mInitY = navStubView.getDeclaredField("mInitY").also { it.isAccessible = true }
             module!!.hook(navStubView.getDeclaredMethod("onTouchEvent", MotionEvent::class.java)).intercept(OnTouchEventHooker())
             module!!.hook(navStubView.getDeclaredConstructor(Context::class.java)).intercept(ConstructorHooker())
         }

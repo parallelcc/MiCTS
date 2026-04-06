@@ -19,8 +19,7 @@ class NavBarEventHelperHooker {
 
         fun hook(param: PackageReadyParam) {
             val navStubGestureEventManager = param.classLoader.loadClass("com.miui.home.recents.cts.NavBarEventHelper")
-            mContext = navStubGestureEventManager.getDeclaredField("mContext")
-            mContext.isAccessible = true
+            mContext = navStubGestureEventManager.getDeclaredField("mContext").also { it.isAccessible = true }
             module!!.hook(navStubGestureEventManager.getDeclaredMethod("onLongPress", MotionEvent::class.java)).intercept(OnLongPressHooker())
         }
 

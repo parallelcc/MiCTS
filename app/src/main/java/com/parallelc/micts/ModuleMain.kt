@@ -97,17 +97,13 @@ class ModuleMain : XposedModule() {
             "com.google.android.googlequicksearchbox" -> {
                 if (!prefs.getBoolean(KEY_DEVICE_SPOOF, DEFAULT_CONFIG[KEY_DEVICE_SPOOF] as Boolean)) return
                 val buildClass = param.classLoader.loadClass("android.os.Build")
-                val manufacturer = buildClass.getDeclaredField("MANUFACTURER")
-                manufacturer.isAccessible = true
+                val manufacturer = buildClass.getDeclaredField("MANUFACTURER").also { it.isAccessible = true }
                 manufacturer.set(null, prefs.getString(KEY_SPOOF_MANUFACTURER, DEFAULT_CONFIG[KEY_SPOOF_MANUFACTURER] as String))
-                val brand = buildClass.getDeclaredField("BRAND")
-                brand.isAccessible = true
+                val brand = buildClass.getDeclaredField("BRAND").also { it.isAccessible = true }
                 brand.set(null, prefs.getString(KEY_SPOOF_BRAND, DEFAULT_CONFIG[KEY_SPOOF_BRAND] as String))
-                val model = buildClass.getDeclaredField("MODEL")
-                model.isAccessible = true
+                val model = buildClass.getDeclaredField("MODEL").also { it.isAccessible = true }
                 model.set(null, prefs.getString(KEY_SPOOF_MODEL, DEFAULT_CONFIG[KEY_SPOOF_MODEL] as String))
-                val device = buildClass.getDeclaredField("DEVICE")
-                device.isAccessible = true
+                val device = buildClass.getDeclaredField("DEVICE").also { it.isAccessible = true }
                 device.set(null, prefs.getString(KEY_SPOOF_DEVICE, DEFAULT_CONFIG[KEY_SPOOF_DEVICE] as String))
             }
             "com.android.systemui" -> {

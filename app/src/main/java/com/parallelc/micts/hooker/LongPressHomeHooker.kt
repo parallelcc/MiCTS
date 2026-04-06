@@ -21,10 +21,8 @@ class LongPressHomeHooker {
         @SuppressLint("PrivateApi")
         fun hook(param: SystemServerStartingParam) {
             val miuiSingleKeyRule = param.classLoader.loadClass("com.android.server.policy.MiuiSingleKeyRule")
-            mContext = miuiSingleKeyRule.getDeclaredField("mContext")
-            mContext.isAccessible = true
-            mKeyCode = miuiSingleKeyRule.getDeclaredField("mKeyCode")
-            mKeyCode.isAccessible = true
+            mContext = miuiSingleKeyRule.getDeclaredField("mContext").also { it.isAccessible = true }
+            mKeyCode = miuiSingleKeyRule.getDeclaredField("mKeyCode").also { it.isAccessible = true }
             module!!.hook(
                 miuiSingleKeyRule.getDeclaredMethod("onLongPress", Long::class.java)
             ).intercept(OnLongPressHooker())
