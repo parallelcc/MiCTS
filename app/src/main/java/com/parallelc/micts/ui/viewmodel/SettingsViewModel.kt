@@ -35,7 +35,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     val appConfig: StateFlow<Map<String,Any>> = _appConfig
     private val _locale = MutableStateFlow<Locale>(Locale.ROOT)
     val locale: StateFlow<Locale> = _locale
-    private val _themeMode = MutableStateFlow<ColorSchemeMode>(ColorSchemeMode.System)
+    private val _themeMode = MutableStateFlow(ColorSchemeMode.System)
     val themeMode: StateFlow<ColorSchemeMode> = _themeMode
 
     private val _xposedService = MutableStateFlow<XposedService?>(null)
@@ -84,13 +84,17 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun updateAppConfig(key: String, value: Any) {
-        if (key == AppConfig.KEY_LANGUAGE) {
-            _locale.value = Language.entries[value as Int].toLocale()
-        } else if (key == AppConfig.KEY_THEME) {
-            _themeMode.value = Theme.entries[value as Int].colorSchemeMode
-        } else {
-            _appConfig.value = _appConfig.value.toMutableMap().apply {
-                this[key] = value
+        when (key) {
+            AppConfig.KEY_LANGUAGE -> {
+                _locale.value = Language.entries[value as Int].toLocale()
+            }
+            AppConfig.KEY_THEME -> {
+                _themeMode.value = Theme.entries[value as Int].colorSchemeMode
+            }
+            else -> {
+                _appConfig.value = _appConfig.value.toMutableMap().apply {
+                    this[key] = value
+                }
             }
         }
         viewModelScope.launch(Dispatchers.IO) {

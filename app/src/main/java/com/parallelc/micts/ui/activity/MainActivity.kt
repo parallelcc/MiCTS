@@ -34,6 +34,7 @@ const val LOG_TAG = BuildConfig.APP_NAME
 fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean): Boolean {
     val result =  runCatching {
         val bundle = Bundle()
+        @Suppress("KotlinConstantConditions", "SimplifyBooleanWithConstants")
         if (BuildConfig.APP_NAME == "MiCTS") {
             bundle.putLong("invocation_time_ms", SystemClock.elapsedRealtime())
             bundle.putInt("omni.entry_point", entryPoint)
@@ -41,7 +42,7 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
         }
         val iVimsClass = Class.forName("com.android.internal.app.IVoiceInteractionManagerService")
         val vis = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java).invoke(null, "voiceinteraction")
-        val vims = Class.forName("com.android.internal.app.IVoiceInteractionManagerService\$Stub").getMethod("asInterface", IBinder::class.java).invoke(null, vis)
+        val vims = Class.forName($$"com.android.internal.app.IVoiceInteractionManagerService$Stub").getMethod("asInterface", IBinder::class.java).invoke(null, vis)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             HiddenApiBypass.invoke(iVimsClass, vims, "showSessionFromSession", null, bundle, 7, "hyperOS_home") as Boolean
         } else {
@@ -53,16 +54,17 @@ fun triggerCircleToSearch(entryPoint: Int, context: Context?, vibrate: Boolean):
     }.getOrDefault(false)
     if (result && vibrate && context != null) {
         runCatching {
-            (context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator).run {
-                val attr = AudioAttributes.Builder()
+            context.getSystemService(Vibrator::class.java)?.run {
+                val effect = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)
+                } else {
+                    VibrationEffect.createWaveform(longArrayOf(0, 1, 75, 76), -1)
+                }
+                @Suppress("DEPRECATION")
+                vibrate(effect, AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_ASSISTANCE_ACCESSIBILITY)
                     .setFlags(128)
-                    .build()
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK), attr)
-                } else {
-                    vibrate(longArrayOf(0, 1, 75, 76), -1, attr)
-                }
+                    .build())
             }
         }.onFailure { e ->
             val errMsg = "triggerCircleToSearch vibrate failed: " + e.stackTraceToString()

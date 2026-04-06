@@ -19,7 +19,7 @@ class CSMSHooker {
 
         @SuppressLint("PrivateApi")
         fun hook(param: SystemServerStartingParam) {
-            val rString = param.classLoader.loadClass("com.android.internal.R\$string")
+            val rString = param.classLoader.loadClass($$"com.android.internal.R$string")
             contextualSearchPackageName = rString.getField("config_defaultContextualSearchPackageName").getInt(null)
             val systemServer = param.classLoader.loadClass("com.android.server.SystemServer")
             module!!.hook(systemServer.getDeclaredMethod("deviceHasConfigString", Context::class.java, Int::class.java))
@@ -32,14 +32,14 @@ class CSMSHooker {
 
         @SuppressLint("PrivateApi")
         fun startContextualSearch(entryPoint: Int): Boolean {
-            var hooks = mutableListOf<HookHandle>()
+            val hooks = mutableListOf<HookHandle>()
             return runCatching {
                 hooks += module!!.hook(enforcePermission!!).intercept(EnforcePermissionHooker())
                 hooks += module!!.hook(getContextualSearchPackageName!!).intercept(GetCSPackageNameHooker())
 
                 val icsmClass = Class.forName("android.app.contextualsearch.IContextualSearchManager")
                 val cs = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java).invoke(null, "contextual_search")
-                val icsm = Class.forName("android.app.contextualsearch.IContextualSearchManager\$Stub").getMethod("asInterface", IBinder::class.java).invoke(null, cs)
+                val icsm = Class.forName($$"android.app.contextualsearch.IContextualSearchManager$Stub").getMethod("asInterface", IBinder::class.java).invoke(null, cs)
                 icsmClass.getDeclaredMethod("startContextualSearch", Int::class.java).invoke(icsm, entryPoint)
             }.onFailure { e ->
                 module!!.log(Log.ERROR, "MiCTS", "invoke startContextualSearch fail", e)
@@ -65,7 +65,7 @@ class CSMSHooker {
         }
 
         class GetCSPackageNameHooker : Hooker {
-            override fun intercept(chain: Chain): Any? {
+            override fun intercept(chain: Chain): Any {
                 return "com.google.android.googlequicksearchbox"
             }
         }

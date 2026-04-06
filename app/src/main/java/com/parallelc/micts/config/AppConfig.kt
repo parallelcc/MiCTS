@@ -14,18 +14,18 @@ enum class Theme(val baseId: Int, val isMonet: Boolean, val colorSchemeMode: Col
 
 enum class Language(val id: Int, val toLocale: () -> Locale) {
     FollowSystem(R.string.follow_system, { Locale.getDefault() }),
-    Arabic(R.string.arabic, { Locale("ar") }),
+    Arabic(R.string.arabic, { Locale.forLanguageTag("ar") }),
     ChineseSimplified(R.string.chinese_simplified, { Locale.SIMPLIFIED_CHINESE }),
     ChineseTraditional(R.string.chinese_traditional, { Locale.TRADITIONAL_CHINESE }),
     English(R.string.english, { Locale.ENGLISH }),
-    Greek(R.string.greek, { Locale("el") }),
+    Greek(R.string.greek, { Locale.forLanguageTag("el") }),
     Japanese(R.string.japanese, { Locale.JAPANESE }),
-    Odia(R.string.odia, { Locale("or") }),
-    Persian(R.string.persian, { Locale("fa") }),
-    Russian(R.string.russian, { Locale("ru") }),
-    Spanish(R.string.spanish, { Locale("es") }),
-    Turkish(R.string.turkish, { Locale("tr") }),
-    Vietnamese(R.string.vietnamese, { Locale("vi") }),
+    Odia(R.string.odia, { Locale.forLanguageTag("or") }),
+    Persian(R.string.persian, { Locale.forLanguageTag("fa") }),
+    Russian(R.string.russian, { Locale.forLanguageTag("ru") }),
+    Spanish(R.string.spanish, { Locale.forLanguageTag("es") }),
+    Turkish(R.string.turkish, { Locale.forLanguageTag("tr") }),
+    Vietnamese(R.string.vietnamese, { Locale.forLanguageTag("vi") }),
 }
 
 object AppConfig {

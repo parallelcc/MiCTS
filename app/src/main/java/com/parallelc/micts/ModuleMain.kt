@@ -35,6 +35,7 @@ class ModuleMain : XposedModule() {
     override fun onSystemServerStarting(param: SystemServerStartingParam) {
         super.onSystemServerStarting(param)
 
+        @Suppress("KotlinConstantConditions", "SimplifyBooleanWithConstants")
         if (BuildConfig.APP_NAME == "MiCTS") {
             if (TriggerService.getSupportedServices().contains(TriggerService.CSHelper)) {
                 runCatching {
@@ -96,18 +97,18 @@ class ModuleMain : XposedModule() {
             "com.google.android.googlequicksearchbox" -> {
                 if (!prefs.getBoolean(KEY_DEVICE_SPOOF, DEFAULT_CONFIG[KEY_DEVICE_SPOOF] as Boolean)) return
                 val buildClass = param.classLoader.loadClass("android.os.Build")
-                val MANUFACTURER = buildClass.getDeclaredField("MANUFACTURER")
-                MANUFACTURER.isAccessible = true
-                MANUFACTURER.set(null, prefs.getString(KEY_SPOOF_MANUFACTURER, DEFAULT_CONFIG[KEY_SPOOF_MANUFACTURER] as String))
-                val BRAND = buildClass.getDeclaredField("BRAND")
-                BRAND.isAccessible = true
-                BRAND.set(null, prefs.getString(KEY_SPOOF_BRAND, DEFAULT_CONFIG[KEY_SPOOF_BRAND] as String))
-                val MODEL = buildClass.getDeclaredField("MODEL")
-                MODEL.isAccessible = true
-                MODEL.set(null, prefs.getString(KEY_SPOOF_MODEL, DEFAULT_CONFIG[KEY_SPOOF_MODEL] as String))
-                val DEVICE = buildClass.getDeclaredField("DEVICE")
-                DEVICE.isAccessible = true
-                DEVICE.set(null, prefs.getString(KEY_SPOOF_DEVICE, DEFAULT_CONFIG[KEY_SPOOF_DEVICE] as String))
+                val manufacturer = buildClass.getDeclaredField("MANUFACTURER")
+                manufacturer.isAccessible = true
+                manufacturer.set(null, prefs.getString(KEY_SPOOF_MANUFACTURER, DEFAULT_CONFIG[KEY_SPOOF_MANUFACTURER] as String))
+                val brand = buildClass.getDeclaredField("BRAND")
+                brand.isAccessible = true
+                brand.set(null, prefs.getString(KEY_SPOOF_BRAND, DEFAULT_CONFIG[KEY_SPOOF_BRAND] as String))
+                val model = buildClass.getDeclaredField("MODEL")
+                model.isAccessible = true
+                model.set(null, prefs.getString(KEY_SPOOF_MODEL, DEFAULT_CONFIG[KEY_SPOOF_MODEL] as String))
+                val device = buildClass.getDeclaredField("DEVICE")
+                device.isAccessible = true
+                device.set(null, prefs.getString(KEY_SPOOF_DEVICE, DEFAULT_CONFIG[KEY_SPOOF_DEVICE] as String))
             }
             "com.android.systemui" -> {
                 if (Build.MANUFACTURER != "meizu") return

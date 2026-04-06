@@ -311,6 +311,7 @@ fun SettingsPage(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
+                    @Suppress("KotlinConstantConditions", "SimplifyBooleanWithConstants")
                     if (BuildConfig.APP_NAME == "MiCTS") {
                         var triggerServiceExpanded by remember { viewModel.triggerServiceExpanded }
                         val selectedOption = TriggerService.entries[xposedConfig[XposedConfig.KEY_TRIGGER_SERVICE] as Int].name

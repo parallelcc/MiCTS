@@ -13,7 +13,6 @@ import com.parallelc.micts.config.XposedConfig.KEY_TRIGGER_SERVICE
 import com.parallelc.micts.module
 import io.github.libxposed.api.XposedInterface.Chain
 import io.github.libxposed.api.XposedInterface.Hooker
-import io.github.libxposed.api.XposedInterface.HookHandle
 import io.github.libxposed.api.XposedModuleInterface.SystemServerStartingParam
 
 class VIMSHooker {
@@ -23,8 +22,8 @@ class VIMSHooker {
 
         @SuppressLint("PrivateApi")
         fun hook(param: SystemServerStartingParam) {
-            val vimsStub = param.classLoader.loadClass("com.android.server.voiceinteraction.VoiceInteractionManagerService\$VoiceInteractionManagerServiceStub")
-            val rString = param.classLoader.loadClass("com.android.internal.R\$string")
+            val vimsStub = param.classLoader.loadClass($$"com.android.server.voiceinteraction.VoiceInteractionManagerService$VoiceInteractionManagerServiceStub")
+            val rString = param.classLoader.loadClass($$"com.android.internal.R$string")
             contextualSearchKey = rString.getField("config_defaultContextualSearchKey").getInt(null)
             contextualSearchPackageName = rString.getField("config_defaultContextualSearchPackageName").getInt(null)
             module!!.hook(vimsStub.getDeclaredMethod("showSessionFromSession", IBinder::class.java, Bundle::class.java, Int::class.java, String::class.java)).intercept(ShowSessionHooker())
