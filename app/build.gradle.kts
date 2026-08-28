@@ -20,11 +20,11 @@ val latestTag = repo?.latestTag?.removePrefix("v") ?: "1.0"
 
 android {
     namespace = "com.parallelc.micts"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 28
-        targetSdk = 36
+        targetSdk = 37
         versionCode = commitCount
         versionName = latestTag
 
