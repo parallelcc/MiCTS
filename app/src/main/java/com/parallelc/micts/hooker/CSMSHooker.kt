@@ -20,7 +20,14 @@ class CSMSHooker {
         @SuppressLint("PrivateApi")
         fun hook(param: SystemServerStartingParam) {
             val rString = param.classLoader.loadClass("com.android.internal.R\$string")
-            contextualSearchPackageName = rString.getField("config_defaultContextualSearchPackageName").getInt(null)
+            
+            // Android 17+: Handle reflection to static final fields with try-catch
+            contextualSearchPackageName = runCatching {
+                rString.getField("config_defaultContextualSearchPackageName").getInt(null)
+            }.onFailure { e ->
+                module!!.log(Log.WARN, "MiCTS", "Failed to get config_defaultContextualSearchPackageName on Android 17+", e)
+            }.getOrElse { -1 }
+            
             val systemServer = param.classLoader.loadClass("com.android.server.SystemServer")
             module!!.hook(systemServer.getDeclaredMethod("deviceHasConfigString", Context::class.java, Int::class.java))
                 .intercept(DeviceHasConfigStringHooker())

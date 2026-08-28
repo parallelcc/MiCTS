@@ -25,8 +25,18 @@ class VIMSHooker {
         fun hook(param: SystemServerStartingParam) {
             val vimsStub = param.classLoader.loadClass("com.android.server.voiceinteraction.VoiceInteractionManagerService\$VoiceInteractionManagerServiceStub")
             val rString = param.classLoader.loadClass("com.android.internal.R\$string")
-            contextualSearchKey = rString.getField("config_defaultContextualSearchKey").getInt(null)
-            contextualSearchPackageName = rString.getField("config_defaultContextualSearchPackageName").getInt(null)
+            // Android 17+: Handle reflection to static final fields with try-catch
+            contextualSearchKey = runCatching {
+                rString.getField("config_defaultContextualSearchKey").getInt(null)
+            }.onFailure { e ->
+                module!!.log(Log.WARN, "MiCTS", "Failed to get config_defaultContextualSearchKey on Android 17+", e)
+            }.getOrElse { -1 }
+            
+            contextualSearchPackageName = runCatching {
+                rString.getField("config_defaultContextualSearchPackageName").getInt(null)
+            }.onFailure { e ->
+                module!!.log(Log.WARN, "MiCTS", "Failed to get config_defaultContextualSearchPackageName on Android 17+", e)
+            }.getOrElse { -1 }
             module!!.hook(vimsStub.getDeclaredMethod("showSessionFromSession", IBinder::class.java, Bundle::class.java, Int::class.java, String::class.java)).intercept(ShowSessionHooker())
         }
 
