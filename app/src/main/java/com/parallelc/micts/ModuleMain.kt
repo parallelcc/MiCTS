@@ -14,6 +14,7 @@ import com.parallelc.micts.config.XposedConfig.KEY_SPOOF_MODEL
 import com.parallelc.micts.hooker.CSMSHooker
 import com.parallelc.micts.hooker.InvokeOmniHooker
 import com.parallelc.micts.hooker.LongPressHomeHooker
+import com.parallelc.micts.hooker.NativeLauncherTriggerHooker
 import com.parallelc.micts.hooker.NavBarActionsConfigHooker
 import com.parallelc.micts.hooker.NavBarEventHelperHooker
 import com.parallelc.micts.hooker.NavStubGestureEventManagerHooker
@@ -49,6 +50,17 @@ class ModuleMain : XposedModule() {
                     CSMSHooker.hook(param)
                 }.onFailure { e ->
                     log(Log.ERROR, "MiCTS", "hook CSMS fail", e)
+                }
+
+                // On HyperOS 4 the launcher triggers Circle to Search natively,
+                // so this is the only place left to apply the gesture switch and
+                // the haptic. Earlier releases drive it from Java — leave those.
+                if (Build.MANUFACTURER == "Xiaomi" && NativeLauncherTriggerHooker.isSupported()) {
+                    runCatching {
+                        NativeLauncherTriggerHooker.hook(param)
+                    }.onFailure { e ->
+                        log(Log.ERROR, "MiCTS", "hook native launcher trigger fail", e)
+                    }
                 }
             }
         }

@@ -21,6 +21,7 @@ val latestTag = repo?.latestTag?.removePrefix("v") ?: "1.0"
 android {
     namespace = "com.parallelc.micts"
     compileSdk = 36
+    ndkVersion = "30.0.14904198"
 
     defaultConfig {
         minSdk = 28
@@ -29,6 +30,16 @@ android {
         versionName = latestTag
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        externalNativeBuild {
+            cmake {
+                targets += "micts_hyos_lsp"
+                // The payload is arm64 only. Restrict the native build, not
+                // the APK — that would strip the dependencies' own libraries
+                // from 32-bit devices, which still use the Java trigger paths.
+                abiFilters += "arm64-v8a"
+            }
+        }
     }
 
     buildTypes {
@@ -60,7 +71,7 @@ android {
             applicationId = "com.parallelc.vistrigger"
             resValue("string", "app_name", "VISTrigger")
             resValue("string", "tile_label", "VIS")
-            resValue("string", "xposed_description", "Trigger Voice Interaction Service on any Android 9–16 device")
+            resValue("string", "xposed_description", "Trigger Voice Interaction Service on any Android 9–17 device")
             buildConfigField("String", "APP_NAME", "\"VISTrigger\"")
         }
     }
@@ -68,6 +79,19 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+
+    externalNativeBuild {
+        cmake {
+            path = rootProject.file("native/CMakeLists.txt")
+            version = "4.1.2"
+        }
+    }
+
+    packaging {
+        // LSPosed maps the entry straight out of the APK: keep it uncompressed.
+        jniLibs.useLegacyPackaging = false
+        resources.merges += "META-INF/xposed/*"
     }
 }
 

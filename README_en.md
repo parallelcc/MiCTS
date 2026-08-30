@@ -4,7 +4,7 @@
 
 [简体中文](/README.md)&nbsp;&nbsp;|&nbsp;&nbsp;English&nbsp;&nbsp;|&nbsp;&nbsp;[Русский](/README_ru.md)&nbsp;&nbsp;|&nbsp;&nbsp;[Türkçe](/README_tr.md)&nbsp;&nbsp;|&nbsp;&nbsp;[فارسی](/README_fa.md)
 
-Trigger Circle to Search on any Android 9–16 device
+Trigger Circle to Search on any Android 9–17 device
 
 *This app only aims to trigger Circle to Search and cannot handle issues that may occur after triggering successfully*
 
