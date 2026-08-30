@@ -57,19 +57,30 @@ object NativeLauncherTriggerHooker {
         val stub = param.classLoader.loadClass(
             "com.android.server.contextualsearch.ContextualSearchManagerService\$ContextualSearchManagerStub"
         )
-        val start = findStartMethod(stub)
-            ?: throw NoSuchMethodException("${stub.name}.startContextualSearch")
-        module!!.hook(start).intercept(StartHooker())
+        val starts = findStartMethods(stub)
+        if (starts.isEmpty()) {
+            throw NoSuchMethodException(
+                "${stub.name}.startContextualSearch/startContextualSearchForApp"
+            )
+        }
+        starts.forEach { start ->
+            module!!.hook(start).intercept(StartHooker(start.name))
+        }
     }
 
-    /** The entry point gained a `ContextualSearchConfig` overload in QPR1. */
-    private fun findStartMethod(stub: Class<*>): Method? = stub.declaredMethods.firstOrNull {
-        if (it.name != "startContextualSearch" || it.returnType != Void.TYPE) return@firstOrNull false
+    /** QPR1 added configs; HyperOS 4's native launcher uses the app-specific entry point. */
+    private fun findStartMethods(stub: Class<*>): List<Method> = stub.declaredMethods.filter {
+        if (it.returnType != Void.TYPE) return@filter false
         val parameters = it.parameterTypes
-        when (parameters.size) {
-            1 -> parameters[0] == Int::class.javaPrimitiveType
-            2 -> parameters[0] == Int::class.javaPrimitiveType &&
-                parameters[1].name == "android.app.contextualsearch.ContextualSearchConfig"
+        when (it.name) {
+            "startContextualSearch" -> when (parameters.size) {
+                1 -> parameters[0] == Int::class.javaPrimitiveType
+                2 -> parameters[0] == Int::class.javaPrimitiveType &&
+                    parameters[1].name == "android.app.contextualsearch.ContextualSearchConfig"
+                else -> false
+            }
+            "startContextualSearchForApp" -> parameters.size == 1 &&
+                parameters[0].name == "android.app.contextualsearch.ContextualSearchConfig"
             else -> false
         }
     }
@@ -120,7 +131,7 @@ object NativeLauncherTriggerHooker {
         CONSUME,
     }
 
-    class StartHooker : Hooker {
+    class StartHooker(private val methodName: String) : Hooker {
         override fun intercept(chain: Chain): Any? {
             val decision = runCatching { decide(chain) }.getOrElse { error ->
                 module!!.log(
@@ -140,6 +151,12 @@ object NativeLauncherTriggerHooker {
         private fun decide(chain: Chain): Decision {
             if (selfInvocation.get() == true) return Decision.PASS_THROUGH
             if (!isLauncherCaller(Binder.getCallingUid())) return Decision.PASS_THROUGH
+
+            module!!.log(
+                Log.INFO,
+                BuildConfig.APP_NAME,
+                "native launcher trigger intercepted via $methodName"
+            )
 
             val prefs = module!!.getRemotePreferences(CONFIG_NAME)
             if (!prefs.getBoolean(
@@ -167,7 +184,7 @@ object NativeLauncherTriggerHooker {
             }
             if (selected == TriggerService.CSService.ordinal) return Decision.BRIDGE
 
-            val entryPoint = chain.args.getOrNull(0) as? Int ?: 1
+            val entryPoint = chain.args.firstOrNull { it is Int } as? Int ?: 1
             triggerExecutor.execute {
                 // The haptic already played above; do not repeat it.
                 asSelfInvocation { triggerCircleToSearch(entryPoint, null, false) }

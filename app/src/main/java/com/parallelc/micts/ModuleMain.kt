@@ -36,6 +36,9 @@ class ModuleMain : XposedModule() {
     override fun onSystemServerStarting(param: SystemServerStartingParam) {
         super.onSystemServerStarting(param)
 
+        val supportsNativeLauncherTrigger =
+            Build.MANUFACTURER == "Xiaomi" && NativeLauncherTriggerHooker.isSupported()
+
         if (BuildConfig.APP_NAME == "MiCTS") {
             if (TriggerService.getSupportedServices().contains(TriggerService.CSHelper)) {
                 runCatching {
@@ -52,12 +55,21 @@ class ModuleMain : XposedModule() {
                     log(Log.ERROR, "MiCTS", "hook CSMS fail", e)
                 }
             }
+        } else if (supportsNativeLauncherTrigger) {
+            // The native launcher aborts if this service was omitted at boot.
+            // VISTrigger consumes its request and forwards it to VIS, so it only
+            // needs the service bootstrap, not MiCTS's provider bypass hooks.
+            runCatching {
+                CSMSHooker.hookServiceBootstrap(param)
+            }.onFailure { e ->
+                log(Log.ERROR, BuildConfig.APP_NAME, "hook contextual search bootstrap fail", e)
+            }
         }
 
         // HyperOS 4 moved the launcher gesture pipeline out of ART. Both MiCTS
         // and VISTrigger therefore bridge the native launcher request in the
         // system server; earlier releases still use the Java launcher hooks.
-        if (Build.MANUFACTURER == "Xiaomi" && NativeLauncherTriggerHooker.isSupported()) {
+        if (supportsNativeLauncherTrigger) {
             runCatching {
                 NativeLauncherTriggerHooker.hook(param)
             }.onFailure { e ->

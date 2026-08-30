@@ -26,13 +26,17 @@ class CSMSHooker {
         private val bypass = ThreadLocal<Boolean>()
 
         @SuppressLint("PrivateApi")
-        fun hook(param: SystemServerStartingParam) {
+        fun hookServiceBootstrap(param: SystemServerStartingParam) {
             val rString = param.classLoader.loadClass("com.android.internal.R\$string")
             contextualSearchPackageName = rString.getField("config_defaultContextualSearchPackageName").getInt(null)
             val systemServer = param.classLoader.loadClass("com.android.server.SystemServer")
             module!!.hook(systemServer.getDeclaredMethod("deviceHasConfigString", Context::class.java, Int::class.java))
                 .intercept(DeviceHasConfigStringHooker())
+        }
 
+        @SuppressLint("PrivateApi")
+        fun hook(param: SystemServerStartingParam) {
+            hookServiceBootstrap(param)
             val csms = param.classLoader.loadClass("com.android.server.contextualsearch.ContextualSearchManagerService")
             enforcePermission = csms.getDeclaredMethod("enforcePermission", String::class.java)
             getContextualSearchPackageName = csms.getDeclaredMethod("getContextualSearchPackageName")
