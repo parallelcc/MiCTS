@@ -12,6 +12,7 @@ import io.github.libxposed.api.XposedInterface.Chain
 import io.github.libxposed.api.XposedInterface.Hooker
 import io.github.libxposed.api.XposedModuleInterface.SystemServerStartingParam
 import java.lang.reflect.Field
+import java.lang.reflect.Method
 
 class LongPressHomeHooker {
     companion object {
@@ -20,17 +21,61 @@ class LongPressHomeHooker {
 
         @SuppressLint("PrivateApi")
         fun hook(param: SystemServerStartingParam) {
-            val miuiSingleKeyRule = param.classLoader.loadClass("com.android.server.policy.MiuiSingleKeyRule")
-            mContext = miuiSingleKeyRule.getDeclaredField("mContext")
-            mContext.isAccessible = true
-            mKeyCode = miuiSingleKeyRule.getDeclaredField("mKeyCode")
-            mKeyCode.isAccessible = true
-            module!!.hook(
-                miuiSingleKeyRule.getDeclaredMethod("onLongPress", Long::class.java)
-            ).intercept(OnLongPressHooker())
-            module!!.hook(
-                miuiSingleKeyRule.getDeclaredMethod("supportLongPress")
-            ).intercept(SupportLongPressHooker())
+            // HyperOS 4 split the single-key rules into one class per key and
+            // overrides the callbacks there, so hooking the shared base class no
+            // longer intercepts anything. Prefer the Home rule and fall back to
+            // the base class on older releases that still implement it directly.
+            val rule = listOf(
+                "com.android.server.input.shortcut.singlekeyrule.HomeKeyRule",
+                "com.android.server.policy.MiuiSingleKeyRule",
+            ).firstNotNullOfOrNull { name ->
+                runCatching { param.classLoader.loadClass(name) }.getOrNull()
+            } ?: throw ClassNotFoundException("no MIUI single-key rule class")
+
+            mContext = findField(rule, "mContext")
+            mKeyCode = findField(rule, "mKeyCode")
+
+            val longPress = findCallback(rule, "onMiuiLongPress", "onLongPress")
+                ?: throw NoSuchMethodException("${rule.name}.onMiuiLongPress")
+            module!!.hook(longPress).intercept(OnLongPressHooker())
+
+            val supports = listOfNotNull(
+                findCallback(rule, "supportLongPress"),
+                findCallback(rule, "miuiSupportLongPress"),
+            )
+            if (supports.isEmpty()) {
+                throw NoSuchMethodException("${rule.name}.supportLongPress")
+            }
+            supports.forEach { module!!.hook(it).intercept(SupportLongPressHooker()) }
+        }
+
+        private fun findField(owner: Class<*>, name: String): Field {
+            var current: Class<*>? = owner
+            while (current != null) {
+                runCatching { current!!.getDeclaredField(name) }.getOrNull()?.let {
+                    it.isAccessible = true
+                    return it
+                }
+                current = current.superclass
+            }
+            throw NoSuchFieldException("${owner.name}.$name")
+        }
+
+        /** Finds the first declared method matching any of [names], nearest class first. */
+        private fun findCallback(owner: Class<*>, vararg names: String): Method? {
+            var current: Class<*>? = owner
+            while (current != null) {
+                for (name in names) {
+                    current.declaredMethods
+                        .filter { it.name == name }
+                        // Each callback is declared once; if a release ever
+                        // overloads one, prefer the simplest form.
+                        .minByOrNull { it.parameterTypes.size }
+                        ?.let { return it }
+                }
+                current = current.superclass
+            }
+            return null
         }
 
         class OnLongPressHooker : Hooker {

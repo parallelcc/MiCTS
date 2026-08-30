@@ -10,7 +10,7 @@
 
 
 
-Триггер для Circle to Search на любом устройстве Android 9–16
+Триггер для Circle to Search на любом устройстве Android 9–17
 
 
 
