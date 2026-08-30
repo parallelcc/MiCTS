@@ -58,6 +58,16 @@ using MotionEventLongFn = int64_t (*)(void*);
 using MotionEventIntFn = int32_t (*)(void*);
 using MotionEventFloatFn = float (*)(void*);
 
+// The launcher's text is mapped straight out of the APK. When those pages are
+// reclaimed they come back from the file, silently undoing an inline patch
+// while LSPosed still believes the hook is installed. Keep what is needed to
+// notice that and redo it.
+constexpr size_t kLongPressPrologueSize = 16u;
+uint8_t* g_launcher_base = nullptr;
+uintptr_t g_long_press_handler_offset = 0u;
+uint8_t g_long_press_prologue[kLongPressPrologueSize]{};
+uint32_t g_repair_in_flight = 0u;
+
 void* g_original_long_press_handler = nullptr;
 void* g_contextual_search_invoke = nullptr;
 void* g_original_has_system_feature = nullptr;
@@ -266,7 +276,50 @@ void PublishMotionSnapshot(void* event, int32_t action) {
                      __ATOMIC_RELAXED);
 }
 
+void HookLongPressHandler(void* closure, uint32_t trigger_mode);
+
+/**
+ * Reinstalls the long-press hook if the launcher's text was remapped under it.
+ *
+ * A PLT hook survives that, because it patches the GOT rather than the code, so
+ * this runs from one — but the inline patch does not: the page comes back from
+ * the APK with the original prologue, while LSPosed still holds a now-dangling
+ * trampoline. Drop its record before hooking again.
+ */
+void RepairLongPressHookIfLost() {
+    uint8_t* base = g_launcher_base;
+    if (base == nullptr ||
+            AtomicLoad(&g_original_long_press_handler) == nullptr) {
+        return;
+    }
+    uint8_t* target = base + g_long_press_handler_offset;
+    if (memcmp(target, g_long_press_prologue, kLongPressPrologueSize) != 0) {
+        return;  // Still patched.
+    }
+    uint32_t idle = 0u;
+    if (!__atomic_compare_exchange_n(&g_repair_in_flight, &idle, uint32_t{1},
+                                     false, __ATOMIC_ACQ_REL,
+                                     __ATOMIC_ACQUIRE)) {
+        return;
+    }
+    RemoveInlineHook(target);
+    AtomicStore(&g_original_long_press_handler, static_cast<void*>(nullptr));
+    const bool repaired =
+            InstallInlineHook(target,
+                              reinterpret_cast<void*>(HookLongPressHandler),
+                              &g_original_long_press_handler) == kHookSuccess &&
+            AtomicLoad(&g_original_long_press_handler) != nullptr;
+    if (!repaired) {
+        AtomicStore(&g_original_long_press_handler, static_cast<void*>(nullptr));
+    }
+    __android_log_print(repaired ? ANDROID_LOG_INFO : ANDROID_LOG_ERROR, kLogTag,
+                        "launcher text was remapped; long-press hook %s",
+                        repaired ? "reinstalled" : "could NOT be reinstalled");
+    __atomic_store_n(&g_repair_in_flight, uint32_t{0}, __ATOMIC_RELEASE);
+}
+
 int32_t HookMotionEventGetActionMasked(void* event) {
+    RepairLongPressHookIfLost();
     auto original = reinterpret_cast<MotionEventActionFn>(
             AtomicLoad(&g_original_motion_get_action_masked));
     if (original == nullptr) return 0;
@@ -512,6 +565,13 @@ void InstallLauncherHook(void* app_entry_point) {
             "launcher stock rather than swallowing an unusable long press");
         return;
     }
+
+    // Capture the untouched prologue first: it is what tells us later whether
+    // the patch is still there.
+    memcpy(g_long_press_prologue, base + profile.long_press_handler_offset,
+           kLongPressPrologueSize);
+    g_launcher_base = base;
+    g_long_press_handler_offset = profile.long_press_handler_offset;
 
     // Publish the invoke helper before the hook goes live, so the very first
     // long press already has a route.

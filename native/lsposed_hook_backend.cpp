@@ -613,6 +613,14 @@ int InstallInlineHook(void* target, void* replacement, void** original) {
     return kHookSuccess;
 }
 
+int RemoveInlineHook(void* target) {
+    if (g_lsposed_api == nullptr || g_lsposed_api->unhookFunc == nullptr ||
+            target == nullptr) {
+        return kHookFailed;
+    }
+    return g_lsposed_api->unhookFunc(target) == 0 ? kHookSuccess : kHookFailed;
+}
+
 bool EnsureLsposedMadviseGuard(const char* runtime_name) {
     // Callers that name no image just want *a* guard in place before hooking;
     // skip re-walking every loaded image once one is installed.
