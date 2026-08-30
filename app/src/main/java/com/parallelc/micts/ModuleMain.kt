@@ -51,17 +51,17 @@ class ModuleMain : XposedModule() {
                 }.onFailure { e ->
                     log(Log.ERROR, "MiCTS", "hook CSMS fail", e)
                 }
+            }
+        }
 
-                // On HyperOS 4 the launcher triggers Circle to Search natively,
-                // so this is the only place left to apply the gesture switch and
-                // the haptic. Earlier releases drive it from Java — leave those.
-                if (Build.MANUFACTURER == "Xiaomi" && NativeLauncherTriggerHooker.isSupported()) {
-                    runCatching {
-                        NativeLauncherTriggerHooker.hook(param)
-                    }.onFailure { e ->
-                        log(Log.ERROR, "MiCTS", "hook native launcher trigger fail", e)
-                    }
-                }
+        // HyperOS 4 moved the launcher gesture pipeline out of ART. Both MiCTS
+        // and VISTrigger therefore bridge the native launcher request in the
+        // system server; earlier releases still use the Java launcher hooks.
+        if (Build.MANUFACTURER == "Xiaomi" && NativeLauncherTriggerHooker.isSupported()) {
+            runCatching {
+                NativeLauncherTriggerHooker.hook(param)
+            }.onFailure { e ->
+                log(Log.ERROR, BuildConfig.APP_NAME, "hook native launcher trigger fail", e)
             }
         }
 

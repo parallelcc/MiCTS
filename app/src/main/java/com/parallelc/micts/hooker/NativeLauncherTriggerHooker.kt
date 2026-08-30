@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
+import com.parallelc.micts.BuildConfig
 import com.parallelc.micts.config.TriggerService
 import com.parallelc.micts.config.XposedConfig.CONFIG_NAME
 import com.parallelc.micts.config.XposedConfig.DEFAULT_CONFIG
@@ -32,13 +33,13 @@ object NativeLauncherTriggerHooker {
 
     fun isSupported(): Boolean = Build.VERSION.SDK_INT >= ANDROID_17
 
-    /** MiCTS's own trigger already applied the settings before it got here. */
+    /** Prevents a bridge-initiated request from being mistaken for a launcher request. */
     private val selfInvocation = ThreadLocal<Boolean>()
 
     private var launcherUid: Int = -1
     private var launcherUidResolved = false
     private val triggerExecutor = Executors.newSingleThreadExecutor { runnable ->
-        Thread(runnable, "micts-launcher-trigger").apply { isDaemon = true }
+        Thread(runnable, "native-launcher-trigger").apply { isDaemon = true }
     }
 
     fun <T> asSelfInvocation(block: () -> T): T {
@@ -88,7 +89,8 @@ object NativeLauncherTriggerHooker {
         return uid == launcherUid
     }
 
-    @SuppressLint("MissingPermission") // Runs in the system server, which owns VIBRATE.
+    // This hook is installed only on Android 17; the system server owns VIBRATE.
+    @SuppressLint("MissingPermission", "NewApi")
     private fun vibrate() {
         runCatching {
             val context = Class.forName("android.app.ActivityThread")
@@ -102,7 +104,7 @@ object NativeLauncherTriggerHooker {
                 .build()
             vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK), attributes)
         }.onFailure { e ->
-            module!!.log(Log.ERROR, "MiCTS", "native launcher trigger vibrate fail", e)
+            module!!.log(Log.ERROR, BuildConfig.APP_NAME, "native launcher trigger vibrate fail", e)
         }
     }
 
@@ -122,7 +124,7 @@ object NativeLauncherTriggerHooker {
         override fun intercept(chain: Chain): Any? {
             val decision = runCatching { decide(chain) }.getOrElse { error ->
                 module!!.log(
-                    Log.ERROR, "MiCTS",
+                    Log.ERROR, BuildConfig.APP_NAME,
                     "native launcher trigger gate failed; passing the request through",
                     error
                 )
@@ -145,16 +147,24 @@ object NativeLauncherTriggerHooker {
                     DEFAULT_CONFIG[KEY_GESTURE_TRIGGER] as Boolean
                 )
             ) {
-                module!!.log(Log.INFO, "MiCTS", "native launcher trigger is disabled; ignoring")
+                module!!.log(
+                    Log.INFO,
+                    BuildConfig.APP_NAME,
+                    "native launcher trigger is disabled; ignoring"
+                )
                 return Decision.CONSUME
             }
             if (prefs.getBoolean(KEY_VIBRATE, DEFAULT_CONFIG[KEY_VIBRATE] as Boolean)) {
                 vibrate()
             }
-            val selected = prefs.getInt(
-                KEY_TRIGGER_SERVICE,
-                DEFAULT_CONFIG[KEY_TRIGGER_SERVICE] as Int
-            )
+            val selected = if (BuildConfig.APP_NAME == "VISTrigger") {
+                TriggerService.VIS.ordinal
+            } else {
+                prefs.getInt(
+                    KEY_TRIGGER_SERVICE,
+                    DEFAULT_CONFIG[KEY_TRIGGER_SERVICE] as Int
+                )
+            }
             if (selected == TriggerService.CSService.ordinal) return Decision.BRIDGE
 
             val entryPoint = chain.args.getOrNull(0) as? Int ?: 1

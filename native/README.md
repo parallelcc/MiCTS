@@ -7,7 +7,7 @@ trigger on Android 17 / HyperOS 4.
 
 HyperOS 4 runs `com.miui.home` as a pure native process — it has no ART runtime
 at all, so it carries no `[anon:dalvik-*]` mappings and LSPosed's Java callbacks
-never fire for it. Every Java hook MiCTS uses for that trigger
+never fire for it. Every Java hook MiCTS and VISTrigger use for that trigger
 (`NavStubView`, `NavStubGestureEventManager`, `NavBarEventHelper`,
 `CircleToSearchHelper`) therefore stops working: the classes are not merely
 renamed, the whole gesture pipeline moved into `libapp_launcher.so`.
@@ -15,8 +15,11 @@ renamed, the whole gesture pipeline moved into `libapp_launcher.so`.
 This payload inline hooks the launcher's contextual-search long-press handler
 instead, and routes the gesture into the launcher's own contextual-search entry
 point. The resulting call reaches `ContextualSearchManagerService` in the system
-server, where `NativeLauncherTriggerHooker` applies the module's settings and
-`CSMSHooker` grants it the permission and provider it needs.
+server, where `NativeLauncherTriggerHooker` applies the module's settings.
+MiCTS can keep the contextual-search route (with `CSMSHooker` supplying the
+permission and provider) or redirect through `VoiceInteractionManagerService`;
+VISTrigger always redirects the request to the configured Voice Interaction
+Service.
 
 Nothing here is version-pinned: the addresses are resolved out of the mapped
 image at runtime by matching the code's structure, so an unknown launcher build
