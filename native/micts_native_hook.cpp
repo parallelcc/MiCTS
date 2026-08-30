@@ -429,6 +429,16 @@ void HookLongPressHandler(void* closure, uint32_t trigger_mode) {
     }
 }
 
+/** Writes a hooked PLT slot back to the original it captured. */
+void RestorePltHook(uint8_t* base, const char* symbol, void** original) {
+    void* captured = AtomicLoad(original);
+    if (captured == nullptr) return;
+    void* discarded = nullptr;
+    if (InstallPltHook(base, symbol, captured, &discarded) == kHookSuccess) {
+        AtomicStore(original, static_cast<void*>(nullptr));
+    }
+}
+
 void InstallLauncherHook(void* app_entry_point) {
     if (AtomicLoad(&g_original_long_press_handler) != nullptr) return;
 
@@ -477,22 +487,26 @@ void InstallLauncherHook(void* app_entry_point) {
             AtomicLoad(&g_motion_get_source) != nullptr &&
             (AtomicLoad(&g_motion_get_raw_y) != nullptr ||
              AtomicLoad(&g_motion_get_y) != nullptr);
+    // A PLT slot already pointing at our replacement cannot be hooked again, so
+    // skip whatever a previous attempt got through and let this one carry on.
     if (!motion_accessors_ready ||
-            InstallPltHook(base, "input_MotionEvent_getActionMasked",
-                           reinterpret_cast<void*>(HookMotionEventGetActionMasked),
-                           &g_original_motion_get_action_masked) != kHookSuccess ||
-            AtomicLoad(&g_original_motion_get_action_masked) == nullptr) {
+            (AtomicLoad(&g_original_motion_get_action_masked) == nullptr &&
+             (InstallPltHook(base, "input_MotionEvent_getActionMasked",
+                             reinterpret_cast<void*>(HookMotionEventGetActionMasked),
+                             &g_original_motion_get_action_masked) != kHookSuccess ||
+              AtomicLoad(&g_original_motion_get_action_masked) == nullptr))) {
         Log(ANDROID_LOG_ERROR,
             "motion tracking unavailable; leaving the launcher stock rather "
             "than swallowing swipes as long presses");
         return;
     }
 
-    if (InstallPltHook(base, "PackageManager_has_system_feature",
-                       reinterpret_cast<void*>(
-                               HookPackageManagerHasSystemFeature),
-                       &g_original_has_system_feature) != kHookSuccess ||
-            AtomicLoad(&g_original_has_system_feature) == nullptr) {
+    if (AtomicLoad(&g_original_has_system_feature) == nullptr &&
+            (InstallPltHook(base, "PackageManager_has_system_feature",
+                            reinterpret_cast<void*>(
+                                    HookPackageManagerHasSystemFeature),
+                            &g_original_has_system_feature) != kHookSuccess ||
+             AtomicLoad(&g_original_has_system_feature) == nullptr)) {
         Log(ANDROID_LOG_ERROR,
             "contextual-search feature probe hook unavailable; leaving the "
             "launcher stock rather than swallowing an unusable long press");
@@ -510,6 +524,10 @@ void InstallLauncherHook(void* app_entry_point) {
             AtomicLoad(&g_original_long_press_handler) == nullptr) {
         AtomicStore(&g_original_long_press_handler, static_cast<void*>(nullptr));
         AtomicStore(&g_contextual_search_invoke, static_cast<void*>(nullptr));
+        // Undo the feature override: claiming support with no routing behind it
+        // is worse than reporting the platform's own answer.
+        RestorePltHook(base, "PackageManager_has_system_feature",
+                       &g_original_has_system_feature);
         Log(ANDROID_LOG_ERROR, "launcher long-press inline hook failed");
         return;
     }
