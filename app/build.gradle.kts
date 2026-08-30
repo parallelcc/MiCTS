@@ -21,7 +21,7 @@ val latestTag = repo?.latestTag?.removePrefix("v") ?: "1.0"
 android {
     namespace = "com.parallelc.micts"
     compileSdk = 36
-    ndkVersion = "30.0.14904198"
+    ndkVersion = "26.2.11394342"
 
     defaultConfig {
         minSdk = 28
@@ -84,7 +84,7 @@ android {
     externalNativeBuild {
         cmake {
             path = rootProject.file("native/CMakeLists.txt")
-            version = "4.1.2"
+            version = "3.22.1"
         }
     }
 

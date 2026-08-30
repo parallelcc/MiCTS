@@ -407,6 +407,15 @@ void HookLongPressHandler(void* closure, uint32_t trigger_mode) {
         return;
     }
 
+    // Decide before touching the detector: once the completion marker is set
+    // the gesture is ours, and there is no going back to the stock route.
+    if (AtomicLoad(&g_contextual_search_invoke) == nullptr) {
+        Log(ANDROID_LOG_WARN,
+            "contextual-search invoke unavailable; keeping the stock route");
+        if (original != nullptr) original(closure, trigger_mode);
+        return;
+    }
+
     // Mark the captured detector state complete before routing, exactly as the
     // stock closure does, so the launcher's own detector is never left stale.
     __atomic_store_n(static_cast<uint8_t*>(completion_state) + 0x10u,

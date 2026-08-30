@@ -283,18 +283,51 @@ bool RegisterMadviseGuard(const Image& image) {
     return true;
 }
 
-bool install_madvise_hook(const char* runtime_name) {
+struct GuardAllRequest {
+    const char* path;
+    size_t guarded;
+};
+
+int GuardMatchingImage(dl_phdr_info* info, size_t, void* opaque) {
+    auto* request = static_cast<GuardAllRequest*>(opaque);
+    const char* mapped_path = info->dlpi_name;
+    if (mapped_path == nullptr || info->dlpi_phnum == 0u ||
+            info->dlpi_phnum > 128u) {
+        return 0;
+    }
+    const bool matches = strchr(request->path, '/') != nullptr
+            ? strcmp(request->path, mapped_path) == 0
+            : strcmp(request->path, BaseName(mapped_path)) == 0;
+    if (!matches) return 0;
+
     Image image{};
-    const char* requested = runtime_name == nullptr
-            ? kHyperRuntimeName : runtime_name;
-    if (!FindImage(requested, 0u, &image) &&
-            (runtime_name == nullptr ||
-             !FindImage(kHyperRuntimeName, 0u, &image))) {
+    image.base = static_cast<uintptr_t>(info->dlpi_addr);
+    image.phdr = info->dlpi_phdr;
+    image.phnum = info->dlpi_phnum;
+    const size_t length = strlen(mapped_path);
+    if (length >= sizeof(image.path)) return 0;
+    memcpy(image.path, mapped_path, length + 1u);
+    if (RegisterMadviseGuard(image)) ++request->guarded;
+    return 0;
+}
+
+// Guards every image matching the name, not just a unique one: the runtime is
+// present both under /system_ext and mapped from the launcher's APK, and each
+// copy imports madvise separately.
+bool install_madvise_hook(const char* runtime_name) {
+    GuardAllRequest request{
+            runtime_name == nullptr ? kHyperRuntimeName : runtime_name, 0u};
+    dl_iterate_phdr(GuardMatchingImage, &request);
+    if (request.guarded == 0u && runtime_name != nullptr) {
+        request.path = kHyperRuntimeName;
+        dl_iterate_phdr(GuardMatchingImage, &request);
+    }
+    if (request.guarded == 0u) {
         __android_log_print(ANDROID_LOG_ERROR, kLogTag,
-                            "cannot resolve loaded %s", requested);
+                            "cannot resolve loaded %s", request.path);
         return false;
     }
-    return RegisterMadviseGuard(image);
+    return true;
 }
 
 uintptr_t RuntimeAddress(const Image& image, ElfW(Addr) value) {
@@ -581,6 +614,12 @@ int InstallInlineHook(void* target, void* replacement, void** original) {
 }
 
 bool EnsureLsposedMadviseGuard(const char* runtime_name) {
+    // Callers that name no image just want *a* guard in place before hooking;
+    // skip re-walking every loaded image once one is installed.
+    if (runtime_name == nullptr &&
+            __atomic_load_n(&g_madvise_guard_state, __ATOMIC_ACQUIRE) == 2u) {
+        return true;
+    }
     if (!install_madvise_hook(runtime_name)) {
         __atomic_store_n(&g_madvise_guard_state, uint32_t{3}, __ATOMIC_RELEASE);
         return false;
