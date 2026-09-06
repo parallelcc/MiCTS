@@ -2,7 +2,6 @@ package com.parallelc.micts.hooker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.IBinder
 import android.util.Log
 import com.parallelc.micts.module
 import io.github.libxposed.api.XposedInterface.Chain
@@ -37,10 +36,13 @@ class CSMSHooker {
                 hooks += module!!.hook(enforcePermission!!).intercept(EnforcePermissionHooker())
                 hooks += module!!.hook(getContextualSearchPackageName!!).intercept(GetCSPackageNameHooker())
 
-                val icsmClass = Class.forName("android.app.contextualsearch.IContextualSearchManager")
-                val cs = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java).invoke(null, "contextual_search")
-                val icsm = Class.forName("android.app.contextualsearch.IContextualSearchManager\$Stub").getMethod("asInterface", IBinder::class.java).invoke(null, cs)
-                icsmClass.getDeclaredMethod("startContextualSearch", Int::class.java).invoke(icsm, entryPoint)
+                // The framework manager adapts this call to the platform's Binder API.
+                // Android 17 added ContextualSearchConfig to the Binder method, while
+                // this manager entry point remains available on Android 15 through 17.
+                val managerClass = Class.forName("android.app.contextualsearch.ContextualSearchManager")
+                val manager = managerClass.getDeclaredConstructor().newInstance()
+                managerClass.getDeclaredMethod("startContextualSearch", Int::class.java)
+                    .invoke(manager, entryPoint)
             }.onFailure { e ->
                 module!!.log(Log.ERROR, "MiCTS", "invoke startContextualSearch fail", e)
             }.also {
