@@ -20,11 +20,11 @@ val latestTag = repo?.latestTag?.removePrefix("v") ?: "1.0"
 
 android {
     namespace = "com.parallelc.micts"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 28
-        targetSdk = 36
+        targetSdk = 37
         versionCode = commitCount
         versionName = latestTag
 
@@ -60,7 +60,7 @@ android {
             applicationId = "com.parallelc.vistrigger"
             resValue("string", "app_name", "VISTrigger")
             resValue("string", "tile_label", "VIS")
-            resValue("string", "xposed_description", "Trigger Voice Interaction Service on any Android 9–16 device")
+            resValue("string", "xposed_description", "Trigger Voice Interaction Service on any Android 9–17 device")
             buildConfigField("String", "APP_NAME", "\"VISTrigger\"")
         }
     }
