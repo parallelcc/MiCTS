@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -68,6 +69,7 @@ import com.parallelc.micts.config.TriggerService
 import com.parallelc.micts.config.XposedConfig
 import com.parallelc.micts.ui.theme.MiCTSTheme
 import com.parallelc.micts.ui.viewmodel.SettingsViewModel
+import com.parallelc.micts.util.ShizukuHelper
 import kotlin.system.exitProcess
 
 class SettingsActivity : ComponentActivity() {
@@ -87,12 +89,23 @@ class SettingsActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (::viewModel.isInitialized) {
+            viewModel.refreshHomeTriggerStatus()
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel) {
     var showAboutDialog by remember { viewModel.showAboutDialog }
+    var showHomeTriggerRestartDialog by remember { viewModel.showHomeTriggerRestartDialog }
+    var showXiaomiSecurityDialog by remember { viewModel.showXiaomiSecurityDialog }
+    var showShizukuNotRunningDialog by remember { viewModel.showShizukuNotRunningDialog }
+    var showGoogleNotDefaultDialog by remember { viewModel.showGoogleNotDefaultDialog }
 
     var topAppBarState = remember { viewModel.topAppBarState }
     val appIcon = LocalContext.current.packageManager.getApplicationIcon(LocalContext.current.applicationInfo.packageName)
@@ -198,6 +211,105 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             modifier = Modifier.fillMaxWidth(0.9f)
         )
     }
+
+    if (showHomeTriggerRestartDialog) {
+        AlertDialog(
+            onDismissRequest = { showHomeTriggerRestartDialog = false },
+            title = {
+                Text(stringResource(R.string.home_trigger_dialog_title))
+            },
+            text = {
+                Text(stringResource(R.string.home_trigger_dialog_message))
+            },
+            confirmButton = {
+                TextButton(onClick = { showHomeTriggerRestartDialog = false }) {
+                    Text(stringResource(R.string.home_trigger_dialog_confirm))
+                }
+            },
+            modifier = Modifier.fillMaxWidth(0.9f)
+        )
+    }
+
+    if (showXiaomiSecurityDialog) {
+        AlertDialog(
+            onDismissRequest = { showXiaomiSecurityDialog = false },
+            title = {
+                Text(stringResource(R.string.xiaomi_security_dialog_title))
+            },
+            text = {
+                Text(stringResource(R.string.xiaomi_security_setting_required))
+            },
+            confirmButton = {
+                TextButton(onClick = { showXiaomiSecurityDialog = false }) {
+                    Text(stringResource(android.R.string.ok))
+                }
+            },
+            modifier = Modifier.fillMaxWidth(0.9f)
+        )
+    }
+
+    if (showShizukuNotRunningDialog) {
+        val context = LocalContext.current
+        AlertDialog(
+            onDismissRequest = { showShizukuNotRunningDialog = false },
+            title = {
+                Text(stringResource(R.string.shizuku_dialog_title))
+            },
+            text = {
+                Text(stringResource(R.string.shizuku_not_running))
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showShizukuNotRunningDialog = false
+                    val launchIntent = context.packageManager.getLaunchIntentForPackage("moe.shizuku.privileged.api")
+                    if (launchIntent != null) {
+                        context.startActivity(launchIntent)
+                    }
+                }) {
+                    Text(stringResource(R.string.open_shizuku))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showShizukuNotRunningDialog = false }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            },
+            modifier = Modifier.fillMaxWidth(0.9f)
+        )
+    }
+
+    if (showGoogleNotDefaultDialog) {
+        val context = LocalContext.current
+        AlertDialog(
+            onDismissRequest = { showGoogleNotDefaultDialog = false },
+            title = {
+                Text(stringResource(R.string.google_assistant_needed_title))
+            },
+            text = {
+                Text(stringResource(R.string.google_not_default_assistant))
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showGoogleNotDefaultDialog = false
+                    runCatching {
+                        context.startActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
+                    }.onFailure {
+                        runCatching {
+                            context.startActivity(Intent(Settings.ACTION_VOICE_INPUT_SETTINGS))
+                        }
+                    }
+                }) {
+                    Text(stringResource(android.R.string.ok))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showGoogleNotDefaultDialog = false }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            },
+            modifier = Modifier.fillMaxWidth(0.9f)
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -257,6 +369,33 @@ fun SettingsPage(
                     checked = appConfig[AppConfig.KEY_ASYNC_TRIGGER] as Boolean,
                     onCheckedChange = {
                         viewModel.updateAppConfig(AppConfig.KEY_ASYNC_TRIGGER, it)
+                    }
+                )
+            }
+        )
+
+        val homeTriggerStatus by viewModel.homeTriggerStatus.collectAsState()
+
+        ListItem(
+            headlineContent = { Text(stringResource(R.string.home_trigger_shizuku)) },
+            supportingContent = {
+                val (textRes, color) = when (homeTriggerStatus) {
+                    is ShizukuHelper.Status.Active -> R.string.home_trigger_active to MaterialTheme.colorScheme.primary
+                    is ShizukuHelper.Status.ResetAfterBoot -> R.string.home_trigger_reset to MaterialTheme.colorScheme.error
+                    is ShizukuHelper.Status.ShizukuNotRunning -> R.string.shizuku_not_running to MaterialTheme.colorScheme.error
+                    is ShizukuHelper.Status.PermissionNeeded -> R.string.shizuku_permission_denied to MaterialTheme.colorScheme.error
+                    is ShizukuHelper.Status.Inactive -> R.string.home_trigger_inactive to MaterialTheme.colorScheme.onSurfaceVariant
+                }
+                Text(
+                    text = stringResource(textRes),
+                    color = color
+                )
+            },
+            trailingContent = {
+                Switch(
+                    checked = homeTriggerStatus is ShizukuHelper.Status.Active,
+                    onCheckedChange = { checked ->
+                        viewModel.toggleHomeTrigger(checked)
                     }
                 )
             }
