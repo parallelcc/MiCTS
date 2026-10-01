@@ -25,6 +25,7 @@ object AppConfig {
     const val KEY_TILE_DELAY = "tile_delay"
     const val KEY_VIBRATE = "vibrate"
     const val KEY_ASYNC_TRIGGER = "async_trigger"
+    const val KEY_HOME_TRIGGER = "home_trigger"
 
     val DEFAULT_CONFIG = mapOf<String, Any>(
         KEY_LANGUAGE to Language.FollowSystem.ordinal,
@@ -32,5 +33,6 @@ object AppConfig {
         KEY_TILE_DELAY to 400L,
         KEY_VIBRATE to false,
         KEY_ASYNC_TRIGGER to false,
+        KEY_HOME_TRIGGER to false,
     )
 }
