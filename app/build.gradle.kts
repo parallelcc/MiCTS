@@ -104,4 +104,6 @@ dependencies {
     compileOnly(libs.libxposed.api)
     implementation(libs.libxposed.service)
     implementation(libs.hiddenapibypass)
+    implementation(libs.shizuku.api)
+    implementation(libs.shizuku.provider)
 }
