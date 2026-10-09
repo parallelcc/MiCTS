@@ -23,6 +23,7 @@
 3. 设置触发方式
     - 打开MiCTS即可触发，因此可以利用其他软件，比如悬浮球、Xposed Edge、ShortX等，将动作设置为打开MiCTS，实现自定义触发方式
     - MiCTS提供了一个触发磁贴，可将其添加到快速设置面板里，通过点击磁贴触发
+    - 对于免root设备，可以使用Shizuku实现长按Home键触发圈定即搜，在MiCTS应用设置中开启即可
     - 对于小米设备，MiCTS内置了长按小白条触发和长按Home键触发的功能，可以在MiCTS设置里开启（安装MiCTS后需要激活模块并重启手机才能使用）
     - 对于Android版本>=13的三星设备，可以从[三星应用商店](https://galaxystore.samsung.com/detail/com.samsung.android.app.routineplus)或[Good Lock](https://galaxystore.samsung.com/detail/com.samsung.android.goodlock)里下载安装“日常程序+”，然后在“设置-模式和日常程序”里，创建日常程序通过按钮操作实现长按电源按钮等方式来启动MiCTS
 
@@ -36,6 +37,10 @@
 ### 应用设置
 - 默认触发延迟：通过打开MiCTS触发的延迟
 - 磁贴触发延迟：通过点击快速设置面板的磁贴触发的延迟
+- 长按Home键触发（Shizuku）：免root通过Shizuku授权`WRITE_SECURE_SETTINGS`并设置助理应用，实现长按Home键触发圈定即搜
+  - 需要Shizuku正在运行，且已将Google设置为默认助理应用
+  - 小米与HyperOS设备需要在开发者选项中开启“USB调试（安全设置）”，否则无法修改设置
+  - 手机重启后Android会重置助理应用设置。如果重启后长按Home键失效，打开MiCTS重新开启该开关即可
 
 ### 模块设置
 需要在LSPosed里激活模块
