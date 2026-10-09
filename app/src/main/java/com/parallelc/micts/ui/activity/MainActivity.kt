@@ -2,6 +2,7 @@ package com.parallelc.micts.ui.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.media.AudioAttributes
 import android.os.Build
 import android.os.Bundle
@@ -23,6 +24,7 @@ import com.parallelc.micts.config.AppConfig.KEY_DEFAULT_DELAY
 import com.parallelc.micts.config.AppConfig.KEY_TILE_DELAY
 import com.parallelc.micts.config.AppConfig.KEY_VIBRATE
 import com.parallelc.micts.module
+import com.parallelc.micts.util.ShizukuHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -77,7 +79,13 @@ class MainActivity : ComponentActivity() {
         if (delayMs > 0) {
             delay(delayMs)
         }
-        if (!triggerCircleToSearch(1, this, vibrate)) {
+        var success = triggerCircleToSearch(1, this, vibrate)
+        if (!success && ShizukuHelper.hasWriteSecureSettings(this)) {
+            ShizukuHelper.restoreVoiceInteractionServiceIfNeeded(this)
+            delay(250)
+            success = triggerCircleToSearch(1, this, vibrate)
+        }
+        if (!success) {
             Toast.makeText(this, getString(R.string.trigger_failed), Toast.LENGTH_SHORT).show()
         }
         finish()
@@ -90,8 +98,9 @@ class MainActivity : ComponentActivity() {
             window.isNavigationBarContrastEnforced = false
         }
         val prefs = getSharedPreferences(CONFIG_NAME, MODE_PRIVATE)
+        val isAssistant = intent.action == Intent.ACTION_ASSIST
         val key = if (intent.getBooleanExtra("from_tile", false)) KEY_TILE_DELAY else KEY_DEFAULT_DELAY
-        val delayMs = prefs.getLong(key, DEFAULT_CONFIG[key] as Long)
+        val delayMs = if (isAssistant) 0L else prefs.getLong(key, DEFAULT_CONFIG[key] as Long)
         val vibrate = prefs.getBoolean(KEY_VIBRATE, DEFAULT_CONFIG[KEY_VIBRATE] as Boolean)
 
         if (prefs.getBoolean(KEY_ASYNC_TRIGGER, DEFAULT_CONFIG[KEY_ASYNC_TRIGGER] as Boolean)) {

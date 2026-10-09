@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">MiCTS</string>
     <string name="tile_label">Circle to Search</string>
     <string name="xposed_description">Trigger Circle to Search on any Android 9–16 device</string>
@@ -35,4 +35,19 @@
     <string name="spanish" translatable="false">Español</string>
     <string name="turkish" translatable="false">Türkçe</string>
     <string name="vietnamese" translatable="false">Việt Nam</string>
+    <string name="home_trigger_shizuku" tools:ignore="MissingTranslation">Trigger by long press home button (Shizuku)</string>
+    <string name="home_trigger_active" tools:ignore="MissingTranslation">Active: long press Home to search</string>
+    <string name="home_trigger_reset" tools:ignore="MissingTranslation">Reset after reboot. Tap to re-enable.</string>
+    <string name="home_trigger_inactive" tools:ignore="MissingTranslation">Uses Shizuku to trigger without root</string>
+    <string name="home_trigger_dialog_title" tools:ignore="MissingTranslation">Note about phone restarts</string>
+    <string name="home_trigger_dialog_message" tools:ignore="MissingTranslation">Android resets the default assistant whenever the phone restarts.\n\nIf long pressing Home stops opening Circle to Search after a reboot, open MiCTS and flip this switch back on.</string>
+    <string name="home_trigger_dialog_confirm" tools:ignore="MissingTranslation">Got it</string>
+    <string name="shizuku_not_running" tools:ignore="MissingTranslation">Shizuku is not running. Start it in the Shizuku app first.</string>
+    <string name="shizuku_permission_denied" tools:ignore="MissingTranslation">Shizuku permission was not granted.</string>
+    <string name="open_shizuku" tools:ignore="MissingTranslation">Open Shizuku</string>
+    <string name="google_not_default_assistant" tools:ignore="MissingTranslation">Google needs to be set as your default digital assistant first. Please select Google in Android settings.</string>
+    <string name="xiaomi_security_setting_required" tools:ignore="MissingTranslation">On Xiaomi and HyperOS devices, turn on \"USB debugging (Security settings)\" in Developer Options so MiCTS can change the assistant.</string>
+    <string name="xiaomi_security_dialog_title" tools:ignore="MissingTranslation">Permission required on Xiaomi</string>
+    <string name="google_assistant_needed_title" tools:ignore="MissingTranslation">Default assistant required</string>
+    <string name="shizuku_dialog_title" translatable="false">Shizuku</string>
 </resources>

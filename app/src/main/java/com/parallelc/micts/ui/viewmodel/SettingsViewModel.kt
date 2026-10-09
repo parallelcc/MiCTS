@@ -15,6 +15,8 @@ import com.parallelc.micts.config.AppConfig
 import com.parallelc.micts.config.Language
 import com.parallelc.micts.config.TriggerService
 import com.parallelc.micts.config.XposedConfig
+import com.parallelc.micts.util.ShizukuHelper
+import rikka.shizuku.Shizuku
 import io.github.libxposed.service.XposedService
 import io.github.libxposed.service.XposedService.OnScopeEventListener
 import io.github.libxposed.service.XposedService.ServiceException
@@ -25,6 +27,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 
 @SuppressLint("PrivateApi")
@@ -56,10 +59,29 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     var scrollState = ScrollState(0)
     var triggerServiceExpanded = mutableStateOf(false)
 
+    private val _homeTriggerStatus = MutableStateFlow<ShizukuHelper.Status>(ShizukuHelper.Status.Inactive)
+    val homeTriggerStatus: StateFlow<ShizukuHelper.Status> = _homeTriggerStatus
+
+    var showHomeTriggerRestartDialog = mutableStateOf(false)
+    var showXiaomiSecurityDialog = mutableStateOf(false)
+    var showShizukuNotRunningDialog = mutableStateOf(false)
+    var showGoogleNotDefaultDialog = mutableStateOf(false)
+
+    private val binderReceivedListener = Shizuku.OnBinderReceivedListener { refreshHomeTriggerStatus() }
+    private val binderDeadListener = Shizuku.OnBinderDeadListener { refreshHomeTriggerStatus() }
+    private var homeTriggerJob: Job? = null
+
     init {
         appConfigPref = application.getSharedPreferences(AppConfig.CONFIG_NAME, MODE_PRIVATE)
         _appConfig.value = AppConfig.DEFAULT_CONFIG + appConfigPref.all.filterValues { it != null }.mapValues { it.value as Any }
         _locale.value = Language.entries[_appConfig.value[AppConfig.KEY_LANGUAGE] as Int].toLocale()
+        val isHomeTrigger = _appConfig.value[AppConfig.KEY_HOME_TRIGGER] as? Boolean ?: false
+        syncHomeTriggerToDeviceProtectedStorage(isHomeTrigger)
+        refreshHomeTriggerStatus()
+        runCatching {
+            Shizuku.addBinderReceivedListenerSticky(binderReceivedListener)
+            Shizuku.addBinderDeadListener(binderDeadListener)
+        }
         XposedServiceHelper.registerListener(object : XposedServiceHelper.OnServiceListener {
             override fun onServiceBind(service: XposedService) {
                 viewModelScope.launch(Dispatchers.IO) {
@@ -88,6 +110,14 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         })
     }
 
+    private fun syncHomeTriggerToDeviceProtectedStorage(enabled: Boolean) {
+        runCatching {
+            getApplication<Application>().createDeviceProtectedStorageContext()
+                .getSharedPreferences(AppConfig.CONFIG_NAME, MODE_PRIVATE)
+                .edit().putBoolean(AppConfig.KEY_HOME_TRIGGER, enabled).apply()
+        }
+    }
+
     fun updateAppConfig(key: String, value: Any) {
         if (key == AppConfig.KEY_LANGUAGE) {
             _locale.value = Language.entries[value as Int].toLocale()
@@ -100,7 +130,12 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             when (value) {
                 is Long -> appConfigPref.edit().putLong(key, value).apply()
                 is Int -> appConfigPref.edit().putInt(key, value).apply()
-                is Boolean -> appConfigPref.edit().putBoolean(key, value).apply()
+                is Boolean -> {
+                    appConfigPref.edit().putBoolean(key, value).apply()
+                    if (key == AppConfig.KEY_HOME_TRIGGER) {
+                        syncHomeTriggerToDeviceProtectedStorage(value)
+                    }
+                }
             }
         }
     }
@@ -163,6 +198,86 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                     _xposedService.value = null
                 }
             }
+        }
+    }
+
+    fun refreshHomeTriggerStatus() {
+        val isEnabled = _appConfig.value[AppConfig.KEY_HOME_TRIGGER] as? Boolean ?: false
+        _homeTriggerStatus.value = ShizukuHelper.getStatus(getApplication(), isEnabled)
+    }
+
+    fun toggleHomeTrigger(enable: Boolean) {
+        val context = getApplication<Application>()
+        homeTriggerJob?.cancel()
+        homeTriggerJob = viewModelScope.launch(Dispatchers.IO) {
+            if (enable) {
+                if (!ShizukuHelper.isGoogleDefaultAssistant(context)) {
+                    withContext(Dispatchers.Main) {
+                        showGoogleNotDefaultDialog.value = true
+                    }
+                    return@launch
+                }
+
+                if (!ShizukuHelper.hasWriteSecureSettings(context)) {
+                    if (!ShizukuHelper.isShizukuRunning()) {
+                        withContext(Dispatchers.Main) {
+                            showShizukuNotRunningDialog.value = true
+                        }
+                        return@launch
+                    }
+
+                    if (!ShizukuHelper.hasShizukuPermission()) {
+                        withContext(Dispatchers.Main) {
+                            ShizukuHelper.requestShizukuPermission { granted ->
+                                if (granted) {
+                                    toggleHomeTrigger(true)
+                                }
+                            }
+                        }
+                        return@launch
+                    }
+
+                    val grantResult = ShizukuHelper.grantWriteSecureSettings(context)
+                    if (grantResult.isFailure) {
+                        val err = grantResult.exceptionOrNull()?.message.orEmpty()
+                        withContext(Dispatchers.Main) {
+                            if (err.contains("XIAOMI_SECURITY_SETTING_REQUIRED")) {
+                                showXiaomiSecurityDialog.value = true
+                            }
+                            refreshHomeTriggerStatus()
+                        }
+                        return@launch
+                    }
+                }
+
+                val applyResult = ShizukuHelper.applyAssistantSetting(context, true)
+                withContext(Dispatchers.Main) {
+                    if (applyResult.isSuccess) {
+                        updateAppConfig(AppConfig.KEY_HOME_TRIGGER, true)
+                        showHomeTriggerRestartDialog.value = true
+                    } else {
+                        val err = applyResult.exceptionOrNull()?.message.orEmpty()
+                        if (err.contains("XIAOMI_SECURITY_SETTING_REQUIRED")) {
+                            showXiaomiSecurityDialog.value = true
+                        }
+                    }
+                    refreshHomeTriggerStatus()
+                }
+            } else {
+                ShizukuHelper.applyAssistantSetting(context, false)
+                withContext(Dispatchers.Main) {
+                    updateAppConfig(AppConfig.KEY_HOME_TRIGGER, false)
+                    refreshHomeTriggerStatus()
+                }
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        runCatching {
+            Shizuku.removeBinderReceivedListener(binderReceivedListener)
+            Shizuku.removeBinderDeadListener(binderDeadListener)
         }
     }
 }

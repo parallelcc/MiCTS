@@ -23,6 +23,7 @@ Trigger Circle to Search on any Android 9–16 device
 3. Set up the trigger method
    - Launching MiCTS will trigger, so you can use other apps like Quick Ball, Xposed Edge, ShortX, etc., set launching MiCTS as the action to customize the trigger method
    - MiCTS provides a trigger tile, so you can add it to the Quick Settings panel and trigger by clicking it
+   - You can trigger Circle to Search by long-pressing the Home button without root via Shizuku. Turn on "Trigger by long press home button (Shizuku)" in MiCTS App Settings
    - For Xiaomi devices, MiCTS has built-in support for `Trigger by long press gesture handle` and `Trigger by long press home button`, which can be enabled in the MiCTS settings (need to activate the module and restart the phone after installing MiCTS)
    - For Samsung devices running Android 13 and above, you can download and install "Routines+" from the [Galaxy Store](https://galaxystore.samsung.com/detail/com.samsung.android.app.routineplus) or [Good Lock](https://galaxystore.samsung.com/detail/com.samsung.android.goodlock). Then, go to Settings > Modes and Routines to create routines that launch MiCTS by Button action such as long-pressing the power button.
    
@@ -37,6 +38,10 @@ Trigger Circle to Search on any Android 9–16 device
 ### App Settings
 - Default trigger delay: The delay when triggering by launching MiCTS
 - Tile trigger delay: The delay when triggering by the Quick Settings panel tile
+- Trigger by long press home button (Shizuku): Triggers Circle to Search on long-press Home without root or Xposed by using Shizuku to grant `WRITE_SECURE_SETTINGS` and configure the assistant app
+  - Requires Shizuku running and Google set as the default digital assistant
+  - On Xiaomi and HyperOS devices, enable "USB debugging (Security settings)" in Developer Options so Shizuku can grant permissions and modify secure settings
+  - Android resets the assistant selection when the phone restarts. If long-pressing Home stops opening Circle to Search after a reboot, open MiCTS and toggle the switch back on
 
 ### Module Settings
 Need to activate the module in LSPosed
