@@ -5,6 +5,7 @@
     <string name="xposed_description">Trigger Circle to Search on any Android 9–16 device</string>
     <string name="title_activity_settings">Settings</string>
     <string name="trigger_failed">Trigger failed!</string>
+    <string name="voice_interaction_service_missing">Assistant service not running. Grant WRITE_SECURE_SETTINGS via adb</string>
     <string name="app_settings">App Settings</string>
     <string name="default_trigger_delay">Default trigger delay</string>
     <string name="tile_trigger_delay">Tile trigger delay</string>

@@ -4,6 +4,7 @@
     <string name="xposed_description">Kích hoạt tính năng Tìm kiếm vòng tròn trên bất kỳ thiết bị Android 9–16</string>
     <string name="title_activity_settings">Cài đặt</string>
     <string name="trigger_failed">Kích hoạt thất bại!</string>
+    <string name="voice_interaction_service_missing">Dịch vụ trợ lý chưa chạy. Hãy cấp quyền WRITE_SECURE_SETTINGS qua adb</string>
     <string name="app_settings">Cài đặt ứng dụng</string>
     <string name="default_trigger_delay">Độ trễ kích hoạt mặc định</string>
     <string name="tile_trigger_delay">Độ trễ kích hoạt của ô lối tắt</string>

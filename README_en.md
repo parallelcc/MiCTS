@@ -15,6 +15,7 @@ Trigger Circle to Search on any Android 9–16 device
 
 2. Install and launch MiCTS
    - If you're lucky, Circle to Search will be triggered directly without root when launching MiCTS
+   - If it shows `Assistant service not running` (e.g. ColorOS 16, where `voice_interaction_service` is cleared on every reboot), run once `adb shell pm grant com.parallelc.micts android.permission.WRITE_SECURE_SETTINGS` (if it is denied, e.g. on ColorOS CN, reinstall with `adb install -r -g MiCTS.apk` instead), then MiCTS will restore the assistant service automatically
    - If nothing happened, most likely it's because Google disabled Circle to Search for your device (you can confirm by checking the message `Omni invocation failed: not enabled` in Logcat). Try the following **with root**:
      - Activate the module in LSPosed, enable `Device spoof for Google` in the [MiCTS settings](#how-to-enter-settings), and force restart Google
      - If it still doesn't work, then change `com.google.android.apps.search.omnient.device` flag `45631784` to true using [GMS-Flags](https://github.com/polodarb/GMS-Flags)
