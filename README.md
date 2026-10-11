@@ -15,6 +15,7 @@
 
 2. 安装并打开MiCTS
     - 如果幸运的话，在不需要root的情况下，打开MiCTS就会直接触发圈定即搜
+    - 如果提示`助理服务未运行`（例如ColorOS 16每次重启都会清空`voice_interaction_service`），执行一次`adb shell pm grant com.parallelc.micts android.permission.WRITE_SECURE_SETTINGS`（如果被拒绝，例如ColorOS国行版，可改为使用`adb install -r -g MiCTS.apk`重新安装），之后MiCTS会自动恢复助理服务
     - 如果没有反应，大概率是因为Google对你的设备禁用了圈定即搜功能（可以通过在Logcat日志中查找`Omni invocation failed: not enabled`确认），在有root的情况下，可以尝试以下方法：
         - 在LSPosed里激活模块，在[MiCTS设置](#进入设置的方式)里开启`Google机型伪装`后，强制重启Google
         - 如果还是不行，使用[GMS-Flags](https://github.com/polodarb/GMS-Flags)，将`com.google.android.apps.search.omnient.device`的flag`45631784`设为true

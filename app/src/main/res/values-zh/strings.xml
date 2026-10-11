@@ -4,6 +4,7 @@
     <string name="xposed_description">在任意Android 9–16设备上触发圈定即搜（Circle to Search）功能</string>
     <string name="title_activity_settings">设置</string>
     <string name="trigger_failed">触发失败！</string>
+    <string name="voice_interaction_service_missing">助理服务未运行，请通过adb授予WRITE_SECURE_SETTINGS权限</string>
     <string name="app_settings">应用设置</string>
     <string name="default_trigger_delay">默认触发延迟</string>
     <string name="tile_trigger_delay">磁贴触发延迟</string>
